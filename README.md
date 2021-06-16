@@ -26,22 +26,22 @@ Server Side
 
 ## Modules
 
-Nodemailer
+**Nodemailer**
 The Nodemailer module makes it easy to send emails from your computer.
 
-Express.js
+**Express.js**
 Express.js, or simply Express, is a back end web application framework for Node.js, released as free and open-source software under the MIT License. It is designed for building web applications and APIs. It has been called the de facto standard server framework for Node.js.
 
-Mongodb (mongoose)
+**Mongodb (mongoose)**
 Mongoose provides a straight-forward, schema-based solution to model the application data. It includes built-in type casting, validation, query building, business logic hooks and more.
 
-Bcryptjs
+**Bcryptjs**
 The bcrypt function is the default password hash algorithm for OpenBSD and was the default for some Linux distributions such as SUSE Linux. There are implementations of bcrypt for C, C++, C#, Elixir, Go, Java, JavaScript, Perl, PHP, Python, Ruby, and other languages.
 
-JsonWebToken
+**JsonWebToken**
 token is the JsonWebToken string secretOrPublicKey is a string or buffer containing either the secret for HMAC algorithms, or the PEM encoded public key for RSA and ECDSA. If jwt.verify is called asynchronous, secretOrPublicKey can be a function that should fetch the secret or public key.
 
-Cors
+**Cors**
 CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
 Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any other origins (domain, scheme, or port) than its own from which a browser should permit loading of resources.
 
@@ -50,7 +50,7 @@ Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allo
 PayStack
 The Paystack API gives access to pretty much all the features we can use on our dashboard and lets you extend them for use in our application. It strives to be RESTful and is organized around the main resources you would be interacting with - with a few notable exceptions.
 
-Google Calendar
+**Google Calendar**
 The Google Calendar API is a RESTful API that can be accessed through explicit HTTP calls or via the Google Client Libraries. The API exposes most of the features available in the Google Calendar Web interface.
 
 Google Maps
