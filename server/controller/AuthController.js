@@ -6,28 +6,100 @@ const UserModel = require("../models/UserModel");
 const bcrypt = require("bcryptjs");
 //module to use .env file
 require("dotenv").config();
-
 const email = require("../config/email/nodemailer");
+
+const chars = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "a",
+  "A",
+  "b",
+  "B",
+  "c",
+  "C",
+  "d",
+  "D",
+  "e",
+  "E",
+  "f",
+  "F",
+  "g",
+  "G",
+  "h",
+  "H",
+  "i",
+  "I",
+  "j",
+  "J",
+  "k",
+  "K",
+  "l",
+  "L",
+  "m",
+  "M",
+  "n",
+  "N",
+  "o",
+  "O",
+  "p",
+  "P",
+  "q",
+  "Q",
+  "r",
+  "R",
+  "s",
+  "S",
+  "t",
+  "T",
+  "u",
+  "U",
+  "v",
+  "V",
+  "w",
+  "W",
+  "x",
+  "X",
+  "y",
+  "y",
+  "z",
+  "Z",
+];
+
+const handleEmail = (subject, emails, message) => {
+  //sends email to user
+  email.sendEmail(emails, subject, message);
+  console.log("email sent");
+};
 
 //log in user by email
 exports.signin = async (req, res) => {
+  console.log(req.body);
   const user = await UserModel.findOne({
-    username: req.body.email,
+    email: req.body.email,
   })
     .select("password")
+    .select("userType")
     .exec();
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
-
+  let jwt_time = process.env.JWT_HOURS_DURATION;
   //Hash password
   await bcrypt.compare(req.body.password, user.password).then((result) => {
     if (result) {
       const token = jwt.sign(
         {
           userId: user._id,
-          admin: user.isAdmin,
+          userType: user.userType,
         },
         process.env.JWT_KEY,
         {
@@ -36,7 +108,7 @@ exports.signin = async (req, res) => {
       );
 
       user.password = undefined;
-      return res.status(200).json({ token, user });
+      return res.status(200).json({ token, user, jwt_time });
     }
 
     return res.status(400).json({ message: "Wrong email or password" });
@@ -68,8 +140,7 @@ exports.signup = async (req, res) => {
     !req.body.email ||
     !req.body.name ||
     !req.body.password ||
-    !req.body.nif ||
-    !req.body.address
+    !req.body.nif
   ) {
     return res.status(400).json({ message: "Please fill all the fields!" });
   }
@@ -78,8 +149,8 @@ exports.signup = async (req, res) => {
   if (
     !req.body.email.trim() ||
     !req.body.name.trim() ||
-    !req.body.password.trim() ||
-    !req.body.address.trim()
+    !req.body.nif ||
+    !req.body.password.trim()
   ) {
     return res.status(400).json({ message: "All fields required!" });
   }
@@ -91,17 +162,18 @@ exports.signup = async (req, res) => {
     address: req.body.address,
     nif: req.body.nif,
     password: req.body.password,
-    isAdmin: false,
+    userType: req.body.userType,
   });
 
   //Save user in the Database
   if (user) {
     //sends email to user
-    email.sendEmail(
-      req.body.email,
+    handleEmail(
       "Welcome to Lembra Saúde",
-      "email: " + req.body.email + "\npassword: " + req.body.password
+      req.body.email,
+      `email: ${req.body.email} \npassword: ${req.body.password}`
     );
+
     //saving
     user.save((error, registeredUser) => {
       if (error) {
@@ -126,4 +198,41 @@ exports.signup = async (req, res) => {
 // reset users password
 exports.resetPassword = async (req, res) => {
   //validations
+  const findUser = await UserModel.findOne({
+    email: req.body.email,
+  });
+
+  //check if findUser has some data (if the email inserted already exists in the database)
+  if (!findUser) {
+    return res.status(404).json({ message: "email not found" });
+  }
+  var newPassword = "";
+  for (let i = 0; i < 6; i++) {
+    newPassword += chars[Math.floor(Math.random() * chars.length) + 1];
+  }
+  const _id = findUser.id;
+  let userParams;
+  userParams = {
+    email: findUser.email,
+    name: findUser.name,
+    address: findUser.address,
+    nif: findUser.nif,
+    password: newPassword,
+    userType: findUser.userType,
+  };
+  bcrypt.hash(newPassword, 10).then(async (hash) => {
+    await UserModel.updateOne({ _id }, { $set: { password: hash } });
+  });
+
+  await UserModel.updateOne({ _id }, { $set: userParams }).then(() => {
+    //sends email to user
+    handleEmail(
+      "Your new password",
+      req.body.email,
+      `new password: ${newPassword}`
+    );
+    return res
+      .status(200)
+      .json({ message: "New password was sent to your email" });
+  });
 };

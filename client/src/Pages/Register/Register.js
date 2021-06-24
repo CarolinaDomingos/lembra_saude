@@ -1,61 +1,101 @@
-import React, { useState } from "react";
-import { Form, Button, Container, Row } from "react-bootstrap"; //bootstrap for react
+import React, { useState, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import "./Register.css";
 
+import { signup } from "../../Services/auth";
+
 const Register = () => {
+  const history = useHistory();
+  const goTo = useCallback(() => history.push("/login"), [history]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     nif: "",
+    address: "",
     password: "",
+    userType: "client",
   });
 
   //Send info to server and waits for response, if the user logs in or not.
-  const regist = () => {};
+  const handleSubmit = (data) => async (e) => {
+    console.log(data);
+    e.preventDefault();
+    try {
+      await signup(data).then((res) => {
+        console.log(res.message);
+        goTo();
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   // add all the info in the formData object
-  const handleData = (e) => {
-    setFormData({});
+  const handleData = (name) => (event) => {
+    setFormData({
+      ...formData,
+      [name]: event.target.value.replace(/\s\s+/g, " "),
+    });
   };
+
   return (
-    <Container>
-      <h1>SIGNUP PAGE</h1>
-      <Row>
-        <Form>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            {/* Input */}
-            <Form.Control type="email" placeholder="Enter email" />
-            <Form.Text className="text-muted">
+    <div className="container">
+      <div className="row">
+        <form onSubmit={handleSubmit(formData)}>
+          <div className="form-group">
+            <label htmlFor="email">Email address</label>
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              id="email"
+              aria-describedby="emailHelp"
+              onChange={handleData("email")}
+              value={formData.email}
+            />
+            <small id="emailHelp" className="form-text text-muted">
               We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Name</Form.Label>
-            {/* Input */}
-            <Form.Control type="text" placeholder="Enter name" />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>NIF</Form.Label>
-            {/* Input */}
-            <Form.Control type="number" placeholder="123 456 789" />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            {/* Input */}
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Confirm Password</Form.Label>
-            {/* Input */}
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <Button variant="primary" type="submit">
+            </small>
+          </div>
+          <div className="form-group">
+            <label htmlFor="name">Full name</label>
+            <input
+              type="text"
+              name="name"
+              className="form-control"
+              id="name"
+              onChange={handleData("name")}
+              value={formData.name}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="exampleInputEmail1">NIF</label>
+            <input
+              type="number"
+              name="nif"
+              className="form-control"
+              id="nif"
+              max="999999999"
+              onChange={handleData("nif")}
+              value={formData.nif}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="exampleInputPassword1">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              id="exampleInputPassword1"
+              onChange={handleData("password")}
+              value={formData.password}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
             Submit
-          </Button>
-        </Form>
-      </Row>
-    </Container>
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

@@ -51,11 +51,6 @@ const routesConfig = [
       import("../Pages/Dashboards/professionalDashboard/Dashboard")
     ),
   },
-  {
-    path: "/resetpassword",
-    exact: true,
-    component: lazy(() => import("../Pages/ResetPassword/ResetPassword")),
-  },
 ];
 
 //rendering all routes to be possible to use them

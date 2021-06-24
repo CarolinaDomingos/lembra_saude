@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
-
+const cookieParser = require("cookie-parser");
 //get all the routes
 const routes = require("./routes");
 
@@ -12,12 +12,13 @@ const app = express();
 //here we now be able to use json documents/files
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cookieParser());
 //this is the policy that will allow us to make requests from the client.
 app.use(cors());
 
 //using all the necessary routes
 app.use("/api/auth", routes.auth);
+app.use("/api/payment", routes.payment);
 app.use("/api/user", routes.user);
 
 /*connects to the database and if everything is ok it will start the server*/

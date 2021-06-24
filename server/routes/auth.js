@@ -5,7 +5,8 @@ require("dotenv").config();
 //controllers
 const AuthController = require("../controller/AuthController");
 
-router.get("/signin", AuthController.signin);
+router.post("/signin", AuthController.signin);
 router.post("/signup", AuthController.signup);
+router.put("/reset_password", AuthController.resetPassword);
 
 module.exports = router;

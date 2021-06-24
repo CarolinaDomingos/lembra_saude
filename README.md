@@ -53,13 +53,12 @@ Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allo
 
 ## REST API's
 
-**PayStack**
+**Stripe**
+Stripe is an API that allow individuals and businesses to receive payments over the internet. It provides the technical, fraud prevention and banking infrastructure needed to operate online payment systems.
 
-The Paystack API gives access to pretty much all the features we can use on our dashboard and lets you extend them for use in our application. It strives to be RESTful and is organized around the main resources you would be interacting with - with a few notable exceptions.
+**React Agenda**
 
-**Google Calendar**
-
-The Google Calendar API is a RESTful API that can be accessed through explicit HTTP calls or via the Google Client Libraries. The API exposes most of the features available in the Google Calendar Web interface.
+react-agenda is an advanced agenda that you can quickly integrate into your app. It's a simple yet effective solution for events management.
 
 **Google Maps**
 

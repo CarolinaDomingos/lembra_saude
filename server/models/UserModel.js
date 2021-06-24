@@ -23,10 +23,13 @@ const userDataSchema = new Schema(
     },
     address: {
       type: String,
-      required: true,
-      unique: false,
+      required: false,
     },
     password: {
+      type: String,
+      required: true,
+    },
+    userType: {
       type: String,
       required: true,
     },
