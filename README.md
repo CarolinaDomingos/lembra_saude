@@ -51,6 +51,9 @@ token is the JsonWebToken string secretOrPublicKey is a string or buffer contain
 CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
 Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any other origins (domain, scheme, or port) than its own from which a browser should permit loading of resources.
 
+**email-validator**
+Helps validate if the user is inserting an email adress or not.
+
 ## REST API's
 
 **Stripe**
