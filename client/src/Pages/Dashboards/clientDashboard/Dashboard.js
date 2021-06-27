@@ -3,7 +3,8 @@ import Menu from "../components/Menu";
 import Panel from "./components/Panel/Panel";
 import ProfilePicture from "./components/ProfilePicture/ProfilePicture";
 import "./Dashboard.css";
-const userDashboard = () => {
+
+const Dashboard = () => {
   const menuList = [
     { icon: <i className="fas fa-user-alt"></i>, name: "Perfil" },
     { icon: <i className="fas fa-calendar-alt"></i>, name: "Utentes" },
@@ -28,4 +29,4 @@ const userDashboard = () => {
   );
 };
 
-export default userDashboard;
+export default Dashboard;

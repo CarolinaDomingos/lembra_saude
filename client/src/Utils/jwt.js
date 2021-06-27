@@ -1,6 +1,6 @@
-export const getJwt = () => localStorage.getItem("token");
+exports.getToken = () => localStorage.getItem("token");
 
-export const clearJwt = () => {
+exports.clearToken = () => {
   try {
     return localStorage.removeItem("token");
   } catch {
@@ -8,7 +8,7 @@ export const clearJwt = () => {
   }
 };
 
-export const setJwt = (token) => {
+exports.setToken = (token) => {
   try {
     localStorage.setItem("token", token);
   } catch {
@@ -16,7 +16,7 @@ export const setJwt = (token) => {
   }
 };
 
-export const getUser = () => {
+exports.getUser = () => {
   try {
     return JSON.parse(localStorage.getItem("user"));
   } catch {
@@ -24,7 +24,7 @@ export const getUser = () => {
   }
 };
 
-export const clearUser = () => {
+exports.clearUser = () => {
   try {
     return localStorage.removeItem("user");
   } catch {
@@ -32,7 +32,7 @@ export const clearUser = () => {
   }
 };
 
-export const setUser = (user) => {
+exports.setUser = (user) => {
   try {
     localStorage.setItem("user", user);
   } catch {

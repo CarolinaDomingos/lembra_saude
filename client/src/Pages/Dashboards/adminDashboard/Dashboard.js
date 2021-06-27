@@ -1,26 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import TableData from "../components/tableData";
 import Menu from "../components/Menu";
+import { useHistory } from "react-router-dom";
+import * as tokeUser from "../../../Utils/localStorage";
+import { getAllUsers, getAllProfessionals } from "../../../Services/user";
 
-const UserDashboard = () => {
-  const [data, setData] = useState("");
-  let menuChoice = "";
-
+const Dashboard = () => {
+  const [data, setData] = useState([]);
+  const [menuChoice, setMenuChoice] = useState("");
+  const history = useHistory();
+  //redirecting...
+  const goTo = useCallback((path) => history.push("/" + path), [history]);
   const menuList = [
     { icon: <i className="fas fa-user-alt"></i>, name: "Perfil" },
     { icon: <i className="fas fa-calendar-alt"></i>, name: "Utentes" },
     {
-      icon: <i class="fas fa-h-square"></i>,
+      icon: <i className="fas fa-h-square"></i>,
       name: "Profissionais de Saude",
     },
     { icon: <i className="fas fa-cog"></i>, name: "Definições" },
   ];
 
   // vai recolher informação dos utilizadores dependendo do tipo de user
-  const getData = (typeOfUser) => {
-    console.log(typeOfUser);
+  const getData = async (choice) => {
+    var response = [];
+    if (choice === "Utentes") {
+      response = await getAllUsers();
+    }
+    if (choice === "Profissionais de Saude") {
+      response = await getAllProfessionals();
+    }
+    //vamos para o perfil do admin
+    if (choice === "Perfil") {
+      const user = JSON.parse(tokeUser.getUserId());
+      goTo("profile/" + user._id);
+    }
     //código para recolha de informação da BD
-    setData(""); //recebe a informação e guarda
+    setData(response); //recebe a informação e guarda
   };
 
   useEffect(() => {
@@ -30,10 +46,10 @@ const UserDashboard = () => {
   return (
     <div>
       <h1>Admin Dashboard</h1>
-      <Menu list={menuList} setChoice={menuChoice} />
+      <Menu list={menuList} setChoice={setMenuChoice} />
       <TableData data={data} />
     </div>
   );
 };
 
-export default UserDashboard;
+export default Dashboard;

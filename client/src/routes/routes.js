@@ -56,6 +56,11 @@ const routesConfig = [
     exact: true,
     component: lazy(() => import("../Pages/ResetPassword/ResetPassword")),
   },
+  {
+    path: "/profile/:id",
+    exact: true,
+    component: lazy(() => import("../Pages/Profile/Profile")),
+  },
 ];
 
 //rendering all routes to be possible to use them

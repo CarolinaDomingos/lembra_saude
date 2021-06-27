@@ -1,6 +1,6 @@
 import React from "react";
 
-const userDashboard = () => {
+const Dashboard = () => {
   return (
     <>
       <h1>Health care Professional Dashboard</h1>
@@ -8,4 +8,4 @@ const userDashboard = () => {
   );
 };
 
-export default userDashboard;
+export default Dashboard;

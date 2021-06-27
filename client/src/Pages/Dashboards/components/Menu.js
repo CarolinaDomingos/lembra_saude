@@ -1,17 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+import "./Menu.css";
 //this will be your menu... side bar or other type of menu that I'm going to need
-const Menu = ({ list }) => {
+const Menu = ({ list, setChoice }) => {
+  const handleData = (name) => (event) => {
+    event.preventDefault();
+    setChoice(name);
+  };
+
   return (
     <div>
       <ul>
-        {list.forEach((el, i) => {
-          <li key={i}>
-            <Link to="">
-              {el.icon} {el.name}
-            </Link>
-          </li>;
+        {list.map((el, i) => {
+          return (
+            <li key={i}>
+              <button
+                onClick={handleData(el.name)}
+                data-toggle="tooltip"
+                data-placement="top"
+                title={el.name}
+              >
+                {el.icon}
+              </button>
+            </li>
+          );
         })}
       </ul>
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { login } from "../../Services/auth";
 import { useHistory, Link } from "react-router-dom";
 import "./Login.css";
-import { setUser, setToken } from "../../Utils/jwt";
+import { setUser, setToken } from "../../Utils/localStorage";
 
 const Login = () => {
   //history it is necessary because I'm going to redirect to some page when necessary

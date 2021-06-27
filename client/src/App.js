@@ -3,9 +3,9 @@ import { React, useEffect, Suspense } from "react";
 import { Redirect, BrowserRouter as Router, Route } from "react-router-dom";
 import Routes from "./routes/routes";
 import Login from "./Pages/Login/Login";
-import Client from "./Pages/Dashboards/clientDashboard";
-import Professional from "./Pages/Dashboards/professionalDashboard";
-import Admin from "./Pages/Dashboards/adminDashboard";
+import Client from "./Pages/Dashboards/clientDashboard/Dashboard";
+import Professional from "./Pages/Dashboards/professionalDashboard/Dashboard";
+import Admin from "./Pages/Dashboards/adminDashboard/Dashboard";
 import { getUserId } from "./Utils/localStorage";
 
 function App() {
