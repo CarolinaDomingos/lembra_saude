@@ -7,6 +7,7 @@ exports.checkAuth = async (req, res, next) => {
   try {
     //get the authorization headers, part of the header will be the auth token
     const headerReq = req.headers.authorization;
+
     const splitedHeader = headerReq.split(" ");
     if (splitedHeader.length !== 2) throw "Unauthenticated";
 
