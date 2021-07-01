@@ -1,56 +1,37 @@
 import "./App.css";
-import { React, useEffect, Suspense } from "react";
-import { Redirect, BrowserRouter as Router, Route } from "react-router-dom";
+import { React, useEffect } from "react";
+import { Redirect, useHistory } from "react-router-dom";
 import Routes from "./routes/routes";
-import Login from "./Pages/Login/Login";
-import Client from "./Pages/Dashboards/clientDashboard/Dashboard";
-import Professional from "./Pages/Dashboards/professionalDashboard/Dashboard";
-import Admin from "./Pages/Dashboards/adminDashboard/Dashboard";
-import { getUserId } from "./Utils/localStorage";
+
+import { getUserId, getToken } from "./Utils/localStorage";
 
 function App() {
   const user = getUserId();
   const location = window.location.pathname;
+  const history = useHistory();
+  const token = getToken();
 
   useEffect(() => {}, []);
 
-  if (!user && location !== "/login") {
-    return (
-      <Suspense fallback={<div className="spinner-border" role="status" />}>
-        <Router>
-          <Redirect to="/login" />
-          <Route to="/login" component={Login} />
-        </Router>
-      </Suspense>
+  if (token && location === "/login") {
+    return history.location.state ? (
+      <Redirect to={history.location.state.from} />
+    ) : (
+      <Redirect to={"/" + user.userType} />
     );
-  } else if (user.userType === "client") {
+  }
+
+  if (!token && location !== "/login") {
     return (
-      <Suspense fallback={<div className="spinner-border" role="status" />}>
-        <Router>
-          <Redirect to="/client" />
-          <Route to="/client" component={Client} />
-        </Router>
-      </Suspense>
+      <Redirect
+        to={{
+          pathname: "/login",
+          state: { from: location },
+        }}
+      />
     );
-  } else if (user.userType === "professional") {
-    return (
-      <Suspense fallback={<div className="spinner-border" role="status" />}>
-        <Router>
-          <Redirect to="/client" />
-          <Route to="/client" component={Professional} />
-        </Router>
-      </Suspense>
-    );
-  } else if (user.userType === "admin") {
-    return (
-      <Suspense fallback={<div className="spinner-border" role="status" />}>
-        <Router>
-          <Redirect to="/admin" />
-          <Route to="/admin" component={Admin} />
-        </Router>
-      </Suspense>
-    );
-  } else return <Routes />;
+  }
+  return <Routes user={user} />;
 }
 
 export default App;

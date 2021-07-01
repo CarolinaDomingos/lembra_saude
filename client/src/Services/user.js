@@ -10,13 +10,13 @@ const config = {
 };
 
 //update user
-async function update(payload) {
-  const res = await axios.post(URL + "user/update/:id", payload, config);
+async function update(id, payload) {
+  const res = await axios.post(URL + "user/update/" + id, payload, config);
   return res ? res.data : "username or password incorrect";
 }
 
-async function deleteUser(payload) {
-  const res = await axios.delete(URL + "user/delete/:id", payload, config);
+async function deleteUser(id) {
+  const res = await axios.delete(URL + "user/delete/" + id, config);
   return res.data;
 }
 

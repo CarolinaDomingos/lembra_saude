@@ -5,9 +5,10 @@
 
     React.lazy(): Code-splitting and lazy-loading with React Suspense
  */
-import React, { lazy, memo, Suspense } from "react";
+import React, { lazy, memo, Suspense, Fragment } from "react";
 // Module to Navigate trough all the links
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 
 /*
  configuring all the links, by identifying the path that we are going to use in the link 
@@ -15,6 +16,11 @@ import { Switch, Route, BrowserRouter } from "react-router-dom";
  if the path for that component is exact, and we need to import the component.
  */
 const routesConfig = [
+  {
+    path: "/page-not-found",
+    exact: true,
+    component: lazy(() => import("../Pages/PageNotFound/PageNotFound")),
+  },
   {
     path: "/login",
     exact: true,
@@ -36,6 +42,7 @@ const routesConfig = [
     component: lazy(() =>
       import("../Pages/Dashboards/clientDashboard/Dashboard")
     ),
+    roles: ["client"],
   },
   {
     path: "/admin",
@@ -43,6 +50,7 @@ const routesConfig = [
     component: lazy(() =>
       import("../Pages/Dashboards/adminDashboard/Dashboard")
     ),
+    roles: ["admin"],
   },
   {
     path: "/professional",
@@ -50,6 +58,7 @@ const routesConfig = [
     component: lazy(() =>
       import("../Pages/Dashboards/professionalDashboard/Dashboard")
     ),
+    roles: ["professional"],
   },
   {
     path: "/resetpassword",
@@ -60,11 +69,16 @@ const routesConfig = [
     path: "/profile/:id",
     exact: true,
     component: lazy(() => import("../Pages/Profile/Profile")),
+    roles: ["client", "admin", "professional"],
+  },
+
+  {
+    component: () => <Redirect to="/page-not-found" />,
   },
 ];
 
 //rendering all routes to be possible to use them
-const renderRoutes = (routes) => {
+const renderRoutes = (routes, user) => {
   if (!routes) {
     return null;
   }
@@ -77,27 +91,40 @@ const renderRoutes = (routes) => {
         Route and Link Reactjs module for routing, 
         The routing help to navigate page using anchor tag or menu link.
      */}
-      <BrowserRouter>
-        <Switch>
-          {/* routes is an array, so we are going to map all the positions to get all the information */}
-          {routes.map((route, i) => {
-            return (
-              <Route
-                key={i}
-                exact
-                path={route.path}
-                component={route.component}
-              />
-            );
-          })}
-        </Switch>
-      </BrowserRouter>
+      <Switch>
+        {/* routes is an array, so we are going to map all the positions to get all the information */}
+        {routes.map((route, i) => {
+          const Layout = route.layout || Fragment;
+          const Component = route.component;
+          const RouteComponent = route.roles ? PrivateRoute : Route;
+
+          return (
+            <RouteComponent
+              key={i}
+              exact
+              path={route.path}
+              component={route.component}
+              roles={route.roles}
+            >
+              {(props) => (
+                <Layout>
+                  {route.routes ? (
+                    renderRoutes(route.routes, user)
+                  ) : (
+                    <Component user={user} {...props} />
+                  )}
+                </Layout>
+              )}
+            </RouteComponent>
+          );
+        })}
+      </Switch>
     </Suspense>
   );
 };
 
-function Routes(token) {
-  return renderRoutes(routesConfig);
+function Routes(user) {
+  return renderRoutes(routesConfig, user);
 }
 
 export default memo(Routes);

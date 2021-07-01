@@ -12,13 +12,13 @@ const Dashboard = () => {
   //redirecting...
   const goTo = useCallback((path) => history.push("/" + path), [history]);
   const menuList = [
-    { icon: <i className="fas fa-user-alt"></i>, name: "Perfil" },
-    { icon: <i className="fas fa-calendar-alt"></i>, name: "Utentes" },
+    { icon: <i className="fas fa-user-alt "></i>, name: "Perfil" },
+    { icon: <i className="fas fa-calendar-alt "></i>, name: "Utentes" },
     {
       icon: <i className="fas fa-h-square"></i>,
       name: "Profissionais de Saude",
     },
-    { icon: <i className="fas fa-cog"></i>, name: "Definições" },
+    { icon: <i className="fas fa-cog "></i>, name: "Definições" },
   ];
 
   // vai recolher informação dos utilizadores dependendo do tipo de user
@@ -45,9 +45,10 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1>Admin Dashboard</h1>
       <Menu list={menuList} setChoice={setMenuChoice} />
-      <TableData data={data} />
+      <div className="pt-5">
+        <TableData data={data} />
+      </div>
     </div>
   );
 };

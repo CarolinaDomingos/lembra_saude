@@ -1,0 +1,7 @@
+.navbar {
+    background-color: white;
+    box-shadow: rgb(0,0,0, 0.25) 0px 5px 10px 0px;
+}
+.navbar i, .navbar .navbar-brand {
+    color: #2F900D
+}
