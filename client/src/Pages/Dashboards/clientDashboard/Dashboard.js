@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Menu from "../components/Menu";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import * as tokeUser from "../../../Utils/localStorage";
-import Agenda from "./subPages/Agenda";
+import Agenda from "./subPages/Agenda/Agenda";
+import Map from "./subPages/Map/Map";
+import FoodPlan from "./subPages/FoodPlan/FoodPlan";
 
 //CSS
 import "./Dashboard.css";
@@ -20,6 +22,7 @@ const Dashboard = () => {
       icon: <i class="fas fa-map-marked-alt"></i>,
       name: "Mapa",
     },
+    { icon: <i class="fas fa-utensils"></i>, name: "Plano Alimentar" },
   ];
 
   // vai recolher informação dos utilizadores dependendo do tipo de user
@@ -46,7 +49,9 @@ const Dashboard = () => {
         {menuChoice === "Agenda" ? (
           <Agenda />
         ) : menuChoice === "Mapa" ? (
-          <div>Mapa</div>
+          <Map />
+        ) : menuChoice === "FoodPlan" ? (
+          <FoodPlan />
         ) : (
           <></>
         )}
