@@ -10,7 +10,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    nif: "",
+    niss: "",
     address: "",
     password: "",
     userType: "client",
@@ -69,15 +69,15 @@ const Register = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="exampleInputEmail1">NIF</label>
+            <label htmlFor="exampleInputEmail1">NISS</label>
             <input
               type="number"
-              name="nif"
+              name="niss"
               className="form-control"
-              id="nif"
+              id="niss"
               max="999999999"
-              onChange={handleData("nif")}
-              value={formData.nif}
+              onChange={handleData("niss")}
+              value={formData.niss}
             />
           </div>
           <div className="form-group">

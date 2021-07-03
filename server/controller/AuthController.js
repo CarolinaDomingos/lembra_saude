@@ -123,16 +123,23 @@ exports.signout = async (req, res) => {
 
 //register user
 exports.signup = async (req, res) => {
-  console.log(req.body);
   //try to find a user by email in the DB
   const findUser = await UserModel.findOne({
     email: req.body.email,
-    nif: req.body.nif,
   });
 
   //check if findUser has some data (if the email inserted already exists in the database)
   if (findUser) {
-    return res.status(409).json({ message: "email or nif already exists!" });
+    return res.status(409).json({ message: "email  exists!" });
+  }
+
+  //try to find a user by email in the DB
+  const findniss = await UserModel.findOne({
+    niss: req.body.niss,
+  });
+  //check if findUser has some data (if the email inserted already exists in the database)
+  if (findniss) {
+    return res.status(409).json({ message: "niss already exists!" });
   }
 
   //check if all fields contain information, if not sends a message to fufill all the fields.
@@ -140,7 +147,7 @@ exports.signup = async (req, res) => {
     !req.body.email ||
     !req.body.name ||
     !req.body.password ||
-    !req.body.nif
+    !req.body.niss
   ) {
     return res.status(400).json({ message: "Please fill all the fields!" });
   }
@@ -149,7 +156,7 @@ exports.signup = async (req, res) => {
   if (
     !req.body.email.trim() ||
     !req.body.name.trim() ||
-    !req.body.nif ||
+    !req.body.niss ||
     !req.body.password.trim()
   ) {
     return res.status(400).json({ message: "All fields required!" });
@@ -160,11 +167,11 @@ exports.signup = async (req, res) => {
     email: req.body.email,
     name: req.body.name,
     address: req.body.address,
-    nif: req.body.nif,
+    niss: req.body.niss,
     password: req.body.password,
     userType: req.body.userType,
   });
-
+  console.log(user);
   //Save user in the Database
   if (user) {
     //sends email to user
@@ -216,7 +223,7 @@ exports.resetPassword = async (req, res) => {
     email: findUser.email,
     name: findUser.name,
     address: findUser.address,
-    nif: findUser.nif,
+    niss: findUser.niss,
     password: newPassword,
     userType: findUser.userType,
   };

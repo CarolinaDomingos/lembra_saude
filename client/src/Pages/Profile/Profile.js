@@ -20,7 +20,7 @@ const Profile = (props) => {
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input
-            type="email"
+            type="text"
             className="form-control"
             id="name"
             aria-describedby="emailHelp"
@@ -42,10 +42,9 @@ const Profile = (props) => {
             type="password"
             className="form-control"
             id="password"
-            value={user.email}
+            value={user.password}
           />
         </div>
-
         <button type="submit" className="btn btn-primary">
           Submit
         </button>

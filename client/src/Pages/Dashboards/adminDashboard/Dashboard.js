@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import TableData from "../components/tableData";
 import Menu from "../components/Menu";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import * as tokeUser from "../../../Utils/localStorage";
 import { getAllUsers, getAllProfessionals } from "../../../Services/user";
 
@@ -13,10 +13,10 @@ const Dashboard = () => {
   const goTo = useCallback((path) => history.push("/" + path), [history]);
   const menuList = [
     { icon: <i className="fas fa-user-alt "></i>, name: "Perfil" },
-    { icon: <i className="fas fa-calendar-alt "></i>, name: "Utentes" },
+    { icon: <i className="fas fa-calendar-alt "></i>, name: "Agenda" },
     {
       icon: <i className="fas fa-h-square"></i>,
-      name: "Profissionais de Saude",
+      name: "Mapa",
     },
     { icon: <i className="fas fa-cog "></i>, name: "Definições" },
   ];
@@ -46,8 +46,15 @@ const Dashboard = () => {
   return (
     <div>
       <Menu list={menuList} setChoice={setMenuChoice} />
-      <div className="pt-5">
-        <TableData data={data} />
+      <div className="container">
+        <div className="col-12 pt-5">
+          <Link className="btn btn-primary" to="/newuser">
+            Novo Utilizador
+          </Link>
+        </div>
+        <div className="pt-5 col-12">
+          <TableData data={data} />
+        </div>
       </div>
     </div>
   );

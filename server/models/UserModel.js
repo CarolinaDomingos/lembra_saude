@@ -16,10 +16,9 @@ const userDataSchema = new Schema(
       type: String,
       required: true,
     },
-    nif: {
+    niss: {
       type: Number,
       required: true,
-      unique: true,
     },
     address: {
       type: String,

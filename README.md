@@ -70,3 +70,4 @@ The Maps JavaScript API lets you customize maps with your own content and imager
 ## Links
 
 React-Bootstrap: https://react-bootstrap.github.io/components/forms/
+React-Scheduler Component: https://code.daypilot.org/77607/react-scheduler-tutorial

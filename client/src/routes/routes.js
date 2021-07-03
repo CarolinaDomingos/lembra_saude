@@ -45,11 +45,33 @@ const routesConfig = [
     roles: ["client"],
   },
   {
+    path: "/client/agenda/:id",
+    exact: true,
+    component: lazy(() =>
+      import("../Pages/Dashboards/clientDashboard/subPages/Agenda")
+    ),
+    roles: ["client"],
+  },
+  {
+    path: "/client/map/:id",
+    exact: true,
+    component: lazy(() =>
+      import("../Pages/Dashboards/clientDashboard/subPages/Map")
+    ),
+    roles: ["client"],
+  },
+  {
     path: "/admin",
     exact: true,
     component: lazy(() =>
       import("../Pages/Dashboards/adminDashboard/Dashboard")
     ),
+    roles: ["admin"],
+  },
+  {
+    path: "/newuser",
+    exact: true,
+    component: lazy(() => import("../Pages/Dashboards/components/NewUser")),
     roles: ["admin"],
   },
   {
