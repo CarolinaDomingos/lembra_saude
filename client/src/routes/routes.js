@@ -48,7 +48,7 @@ const routesConfig = [
     path: "/client/agenda/:id",
     exact: true,
     component: lazy(() =>
-      import("../Pages/Dashboards/clientDashboard/subPages/Agenda")
+      import("../Pages/Dashboards/clientDashboard/subPages/Agenda/Agenda")
     ),
     roles: ["client"],
   },
@@ -56,7 +56,7 @@ const routesConfig = [
     path: "/client/map/:id",
     exact: true,
     component: lazy(() =>
-      import("../Pages/Dashboards/clientDashboard/subPages/Map")
+      import("../Pages/Dashboards/clientDashboard/subPages/Map/Map")
     ),
     roles: ["client"],
   },

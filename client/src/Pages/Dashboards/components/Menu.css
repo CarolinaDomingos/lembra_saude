@@ -5,3 +5,7 @@
 .navbar i, .navbar .navbar-brand {
     color: #2F900D
 }
+
+.nav-item {
+    cursor: pointer;
+}

@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import "./Menu.css";
 import { removeToken, removeUser } from "../../../Utils/localStorage";
 //this will be your menu... side bar or other type of menu that I'm going to need
@@ -19,9 +19,9 @@ const Menu = ({ list, setChoice }) => {
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-light ">
-      <a className="navbar-brand pl-3" href>
+      <Link className="navbar-brand pl-3" to="/">
         Lembra Saude
-      </a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -38,23 +38,21 @@ const Menu = ({ list, setChoice }) => {
         <ul className="navbar-nav ml-auto mr-auto">
           {list.map((el, i) => {
             return (
-              <li className="nav-item px-3" key={i}>
-                <a
-                  href
-                  onClick={handleData(el.name)}
+              <li 
+                className="nav-item px-3" key={i}
+                 onClick={handleData(el.name)}
                   data-toggle="tooltip"
                   data-placement="top"
                   title={el.name}
-                >
+              >
                   {el.icon}
-                </a>
               </li>
             );
           })}
         </ul>
         <ul className="navbar-nav ml-auto pr-3">
-          <li onClick={logout()}>
-            <i class="fas fa-sign-out-alt"></i>
+          <li className="nav-item" onClick={logout()}>
+            <i className="fas fa-sign-out-alt"></i>
           </li>
         </ul>
       </div>

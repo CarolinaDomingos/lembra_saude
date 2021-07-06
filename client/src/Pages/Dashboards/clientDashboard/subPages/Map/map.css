@@ -1,0 +1,8 @@
+.map{
+    margin: 0;
+    padding: 0;
+}
+
+.map .frame {
+    margin-left: -15vw !important;
+}

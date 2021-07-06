@@ -5,7 +5,7 @@ import * as tokeUser from "../../../Utils/localStorage";
 import Agenda from "./subPages/Agenda/Agenda";
 import Map from "./subPages/Map/Map";
 import FoodPlan from "./subPages/FoodPlan/FoodPlan";
-
+import MyLeaderBoardAd from "../../../Components/advertisements/Ads"
 //CSS
 import "./Dashboard.css";
 
@@ -19,10 +19,10 @@ const Dashboard = () => {
     { icon: <i className="fas fa-user-alt"></i>, name: "Perfil" },
     { icon: <i className="fas fa-calendar-alt"></i>, name: "Agenda" },
     {
-      icon: <i class="fas fa-map-marked-alt"></i>,
+      icon: <i className="fas fa-map-marked-alt"></i>,
       name: "Mapa",
     },
-    { icon: <i class="fas fa-utensils"></i>, name: "Plano Alimentar" },
+    { icon: <i className="fas fa-utensils"></i>, name: "Plano Alimentar" },
   ];
 
   // vai recolher informação dos utilizadores dependendo do tipo de user
@@ -46,6 +46,10 @@ const Dashboard = () => {
     <div>
       <Menu list={menuList} setChoice={setMenuChoice} />
       <div className="container">
+      <div className="col-12">
+        <MyLeaderBoardAd slot="5707323643" classNames="page-top"/>
+      </div>
+      
         {menuChoice === "Agenda" ? (
           <Agenda />
         ) : menuChoice === "Mapa" ? (
