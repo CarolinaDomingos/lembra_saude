@@ -21,13 +21,13 @@ const Menu = () => {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav ml-auto mr-auto col-4">
-          <li className="nav-item px-3">
+        <ul className="navbar-nav ml-auto mr-auto col-6">
+          <li className="nav-item mx-5">
             <Link to="/about" className="color">
               Como Funciona
             </Link>
           </li>
-          <li className="nav-item px-3">
+          <li className="nav-item mx-5">
             <Link to="/price" className="color">
               Preçário
             </Link>

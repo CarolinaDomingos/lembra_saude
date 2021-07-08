@@ -1,47 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { DayPilot, DayPilotScheduler } from "daypilot-pro-react";
+import { updateAgenda, getUserAgenda } from "../../../../../Services/agenda";
 import "./Agenda.css";
 const Agenda = () => {
   const [month, setMonth] = useState("10");
   const [year, setYear] = useState(2021);
   // guarda todos os eventos do calendário do utilizador
-  const [agenda, setAgenda] = useState([
-    {
-      id: 1,
-      text: "Event 1",
-      start: "2021-10-02T00:00:00",
-      end: "2021-10-02T00:00:00",
-      resource: "10H",
-      element: <i className="fas fa-trash-alt"></i>,
-    },
-    {
-      id: 2,
-      text: "Event 2",
-      start: "2021-10-01T00:00:00",
-      end: "2021-10-01T00:00:00",
-      resource: "8H",
-      barColor: "#38761d",
-      barBackColor: "#93c47d",
-    },
-    {
-      id: 3,
-      text: "Event 3",
-      start: "2021-10-02T00:00:00",
-      end: "2021-10-02T00:00:00",
-      resource: "15H",
-      barColor: "#f1c232",
-      barBackColor: "#f1c232",
-    },
-    {
-      id: 4,
-      text: "Event 4",
-      start: "2021-10-08T00:00:00",
-      end: "2021-10-08T00:00:00",
-      resource: "14H",
-      barColor: "#cc0000",
-      barBackColor: "#ea9999",
-    },
-  ]);
+  const [agenda, setAgenda] = useState([]);
 
   //definições gerais do calendário.
   const [event, setEvent] = useState({
@@ -54,95 +19,7 @@ const Agenda = () => {
     cellWidthSpec: 100,
     resources: [],
     events: agenda,
-    onBeforeEventDomAdd: (args) => {
-      args.element = (
-        <div>
-          {args.e.data.text}
-          <div
-            style={{
-              position: "absolute",
-              right: "0px",
-              top: "5px",
-              width: "17px",
-              height: "17px",
-            }}
-            onClick={() => deleteEvent(args.e)}
-          >
-            <i className="fas fa-trash-alt"></i>
-          </div>
-
-          <div
-            style={{
-              position: "absolute",
-              right: "0px",
-              top: "26px",
-              width: "17px",
-              height: "17px",
-            }}
-            onClick={() => changeColor(args.e)}
-          >
-            <i className="fas fa-palette"></i>
-          </div>
-        </div>
-      );
-    },
   });
-
-  //elimina o evento
-  const deleteEvent = (e) => {
-    let i = 0;
-    for (let x = 0; x < event.events.length; x++) {
-      if (event.events[x].id === e.data.id) {
-        i = x;
-      }
-    }
-
-    event.events.splice(i, 1);
-    const newAgenda = event.events;
-    setAgenda(newAgenda);
-    setEvent((prevState) => ({
-      ...prevState,
-      events: newAgenda,
-    }));
-  };
-
-  //altera a cor do evento
-  const changeColor = (e) => {
-    let colors = [
-      "#0000FF",
-      "#CC0000",
-      "#CCFF00",
-      "#FFFF00",
-      "#FF33FF",
-      "#33FFFF",
-    ];
-
-    const colorPicker =
-      colors[parseInt(Math.floor(Math.random() * colors.length))];
-
-    let i = 0;
-
-    for (let x = 0; x < event.events.length; x++) {
-      if (event.events[x].id === e.data.id) {
-        i = x;
-      }
-    }
-    const newAgenda = event.events;
-    newAgenda[i] = {
-      id: newAgenda[i].id,
-      text: newAgenda[i].text,
-      start: newAgenda[i].start,
-      end: newAgenda[i].end,
-      resource: newAgenda[i].resource,
-      barColor: colorPicker,
-      barBackColor: colorPicker,
-    };
-    setAgenda(newAgenda);
-    setEvent((prevState) => ({
-      ...prevState,
-      events: newAgenda,
-    }));
-  };
 
   // coloca as horas no calendário
   const getTime = () => {
@@ -154,6 +31,13 @@ const Agenda = () => {
     return hours;
   };
 
+  //recebe a informação da agenda vinda da BD
+  const getAgenda = async () => {
+    const { agenda } = await getUserAgenda();
+    const nevents = agenda[0].agenda;
+    setAgenda(nevents);
+  };
+
   //atualiza quando a página inicia pela primeira vez
   useEffect(() => {
     const hours = getTime();
@@ -162,12 +46,69 @@ const Agenda = () => {
         state.resources.push(hours[i]);
       }
     });
+    getAgenda();
   }, []);
 
+  useEffect(() => {
+    setEvent((prevState) => ({
+      ...prevState,
+      events: agenda,
+    }));
+  }, [agenda]);
+
+  //define as horas do calendário.
+  useEffect(() => {
+    setEvent({
+      ...event,
+      startDate: year + "-" + month + "-01",
+      days: new Date(year, month, 0).getDate(),
+    });
+  }, [year, month]);
+
+  //altera a cor do evento
+  const changeColor = async (args) => {
+    let colors = [
+      "#0000FF",
+      "#CC0000",
+      "#CCFF00",
+      "#FFFF00",
+      "#FF33FF",
+      "#33FFFF",
+    ];
+    const colorPicker =
+      colors[parseInt(Math.floor(Math.random() * colors.length))];
+
+    let i = 0;
+    for (let x = 0; x < agenda.length; x++) {
+      if (agenda[x].id === args.e.data.id) {
+        i = x;
+      }
+    }
+    if (i === 0) return;
+    const newAgenda = agenda;
+    newAgenda[i] = {
+      id: newAgenda[i].id,
+      text: newAgenda[i].text,
+      start: newAgenda[i].start,
+      end: newAgenda[i].end,
+      resource: newAgenda[i].resource,
+      barColor: colorPicker,
+      barBackColor: colorPicker,
+      professionalId: newAgenda[i].professionalId,
+    };
+    await updateAgenda(newAgenda);
+    setAgenda(newAgenda);
+    setEvent((prevState) => ({
+      ...prevState,
+      events: newAgenda,
+    }));
+  };
+
   //função que altera a posição do evento no calendário
-  const moveEvent = () => {
+  const moveEvent = async () => {
     const newAgenda = event.events;
     setAgenda(newAgenda);
+    await updateAgenda(newAgenda);
   };
 
   //cria um novo evento no calendário
@@ -194,13 +135,14 @@ const Agenda = () => {
     const newAgenda = event.events;
     if (res) {
       newAgenda.push({
-        id: agenda.length + 1,
+        id: agenda[agenda.length - 1].id + 1,
         text: res.result,
         start: args.start,
         end: args.end,
         resource: args.resource,
         barColor: colorPicker,
         barBackColor: colorPicker,
+        professionalId: "",
       });
 
       setEvent((prevState) => ({
@@ -209,6 +151,7 @@ const Agenda = () => {
       }));
     }
     setAgenda(newAgenda);
+    await updateAgenda(newAgenda);
   };
 
   //edita um evento do calendário
@@ -222,6 +165,7 @@ const Agenda = () => {
       }
       return modal;
     });
+
     if (!res) return;
     let index = 0;
     for (let i = 0; i < agenda.length; i++) {
@@ -238,9 +182,35 @@ const Agenda = () => {
       resource: args.e.data.resource,
       barColor: args.e.data.barColor,
       barBackColor: args.e.data.barBackColor,
+      professionalId: newAgenda[index].professionalId,
     };
+
+    await updateAgenda(newAgenda);
+
     setAgenda(newAgenda);
     setEvent({ ...event, events: agenda });
+  };
+
+  //elimina o evento
+  const deleteEvent = async (e) => {
+    const response = window.confirm(
+      "Está prestes a eliminar este evento. Continuar?"
+    );
+    let i = 0;
+    for (let x = 0; x < agenda.length; x++) {
+      if (agenda[x].id === e.data.id) {
+        i = x;
+      }
+    }
+    if (!response) return;
+    event.events.splice(i, 1);
+    const newAgenda = event.events;
+    await updateAgenda(newAgenda);
+    setAgenda(newAgenda);
+    setEvent((prevState) => ({
+      ...prevState,
+      events: newAgenda,
+    }));
   };
 
   //altera o mês do calendário e o ano dependendo do mês em que se encontra e se vai para o mes seguinte ou anterior.
@@ -258,14 +228,6 @@ const Agenda = () => {
       setMonth((parseInt(month) + n).toString());
     }
   };
-
-  useEffect(() => {
-    setEvent({
-      ...event,
-      startDate: year + "-" + month + "-01",
-      days: new Date(year, month, 0).getDate(),
-    });
-  }, [month, year]);
 
   //HTML que vai retornar deste componente
   return (
@@ -287,11 +249,18 @@ const Agenda = () => {
         onEventMoved={(args) => {
           moveEvent(args);
         }}
+        onEventClick={(args) => {
+          changeColor(args);
+        }}
         onTimeRangeSelected={(args) => {
           createEvent(args);
         }}
-        onEventClick={(args) => {
+        eventDoubleClickHandling="Enabled"
+        onEventDoubleClicked={(args) => {
           editEvent(args);
+        }}
+        onEventRightClick={(args) => {
+          deleteEvent(args.e);
         }}
       />
     </div>

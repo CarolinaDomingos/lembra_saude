@@ -20,6 +20,7 @@ app.use(cors());
 app.use("/api/auth", routes.auth);
 app.use("/api/payment", routes.payment);
 app.use("/api/user", routes.user);
+app.use("/api/agenda", routes.agenda);
 
 /*connects to the database and if everything is ok it will start the server*/
 
