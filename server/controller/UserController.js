@@ -5,7 +5,6 @@ const { MESSAGES } = require("../constantes/consts.js");
 
 //Get all the users.
 exports.getAllUsers = async (req, res) => {
-  console.log(req._user.userType);
   //if its not and admin or if isn't the correct user will throw an json error
   if (req._user.userType !== "admin") {
     return res.status(401).json({ message: "You don't have permition" });
@@ -50,7 +49,6 @@ exports.getAllProfessionals = async (req, res) => {
 
 //Get the user when that login.
 exports.get = async (req, res) => {
-  console.log(req);
   //if its not and admin or if isn't the correct user will throw an json error
   if (!req._user.userType === "admin" && req._user._id != req.params.userId) {
     return res.status(401).json({ message: "You don't have permition" });
@@ -73,7 +71,52 @@ exports.get = async (req, res) => {
 
 //update user's personal info
 exports.update = async (req, res) => {
+  console.log(req.params.userId, req._user._id);
+  if (req._user.userType != "admin" && req._user._id != req.params.userId) {
+    return res.status(401).json({ message: "Não tem permissão de acesso" });
+  }
+
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).json({
+      message: "Não inseriu dados. Porfavor preencha os campos em falta",
+    });
+  }
+
+  var regex = /^[a-zA-Z/ /]+$/;
+  const result = regex.test(req.body.name.trim());
+  if (!result) {
+    return res.status(400).json({ message: "O nome só deve conter letras" });
+  }
+
   //code to update user
+  const _id = req.params.userId;
+  let Params;
+  if (req.body.password) {
+    Params = {
+      email: req.body.email,
+      name: req.body.name,
+      password: req.body.password,
+      userType: req.body.userType,
+    };
+  } else {
+    Params = {
+      email: req.body.email,
+      name: req.body.name,
+      userType: req.body.userType,
+    };
+  }
+
+  if (req.body.password) {
+    bcrypt.hash(req.body.password, 10).then(async (hash) => {
+      await UserModel.updateOne({ _id }, { $set: { password: hash } });
+    });
+  }
+
+  const response = await UserModel.updateOne({ _id }, { $set: Params });
+  console.log(response);
+  if (result) {
+    return res.status(200).json({ message: "Atualizado!" });
+  }
 };
 
 //delete user and all ifo related to that user

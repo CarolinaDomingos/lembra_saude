@@ -1,22 +1,58 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getUser } from "../../Services/user";
+import { update } from "../../Services/user";
 
 const Profile = (props) => {
   const [user, setUser] = useState({});
-  // arrow function
-  const get = async () => {
-    const { user } = await getUser(props.match.params.id);
-    setUser(user);
+  const [formData, setFormData] = useState({
+    email: "",
+    name: "",
+    password: "",
+    userType: "",
+  });
+
+  //guarda as alterações no state formData
+  const handleChange = (name) => (event) => {
+    setFormData({
+      ...formData,
+      [name]: event.target.value.replace(/\s\s+/g, " "),
+    });
   };
   // executa a primeira vez que a página é executada
   useEffect(() => {
     get();
   }, []);
 
+  // arrow function
+  const get = async () => {
+    const { user } = await getUser(props.match.params.id);
+    const arr = {
+      _id: props.match.params.id,
+      name: user.name,
+      email: user.email,
+      userType: user.userType,
+      password: "",
+    };
+    setUser(arr);
+    setFormData(arr);
+  };
+
+  const handleSubmit = (formData) => async (e) => {
+    e.preventDefault();
+    try {
+      await update(user._id, formData).then((res) => {
+        alert(res.message);
+      });
+    } catch (err) {
+      alert(err.response);
+    }
+  };
+
   return (
     <div className="container">
       <h1>Profile Page</h1>
-      <form>
+      <form noValidate autoComplete="off" onSubmit={handleSubmit(formData)}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input
@@ -24,7 +60,8 @@ const Profile = (props) => {
             className="form-control"
             id="name"
             aria-describedby="emailHelp"
-            value={user.name}
+            onChange={handleChange("name")}
+            value={formData.name}
           />
         </div>
         <div className="form-group">
@@ -33,7 +70,8 @@ const Profile = (props) => {
             type="text"
             className="form-control"
             id="email"
-            value={user.email}
+            onChange={handleChange("email")}
+            value={formData.email}
           />
         </div>
         <div className="form-group">
@@ -41,13 +79,16 @@ const Profile = (props) => {
           <input
             type="password"
             className="form-control"
-            id="password"
-            value={user.password}
+            onChange={handleChange("password")}
+            value={formData.password}
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          Submit
+          Atualizar
         </button>
+        <Link to={"/" + user.userType} className="mx-4">
+          cancelar
+        </Link>
       </form>
     </div>
   );

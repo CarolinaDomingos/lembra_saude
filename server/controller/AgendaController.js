@@ -45,12 +45,10 @@ exports.update = async (req, res) => {
     return res.status(401).json({ message: "You don't have permition" });
   }
 
-  console.log(req.body);
   const Params = {
     userId: _id,
     agenda: req.body.agenda ? req.body.agenda : req.body,
   };
-  console.log(Params);
   const result = await AgendaModel.updateOne({ userId: _id }, { $set: Params });
 
   if (result) {
