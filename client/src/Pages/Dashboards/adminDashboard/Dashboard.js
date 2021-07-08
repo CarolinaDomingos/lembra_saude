@@ -13,10 +13,10 @@ const Dashboard = () => {
   const goTo = useCallback((path) => history.push("/" + path), [history]);
   const menuList = [
     { icon: <i className="fas fa-user-alt "></i>, name: "Perfil" },
-    { icon: <i className="fas fa-calendar-alt "></i>, name: "Agenda" },
+    { icon: <i className="fas fa-calendar-alt "></i>, name: "Utentes" },
     {
       icon: <i className="fas fa-h-square"></i>,
-      name: "Mapa",
+      name: "Profissionais de Saude",
     },
     { icon: <i className="fas fa-cog "></i>, name: "Definições" },
   ];

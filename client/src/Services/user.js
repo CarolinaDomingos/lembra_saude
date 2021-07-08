@@ -11,7 +11,6 @@ const config = {
 
 //update user
 async function update(id, payload) {
-  console.log(id);
   const res = await axios.put(URL + "user/update/" + id, payload, config);
   return res ? res.data : "username or password incorrect";
 }

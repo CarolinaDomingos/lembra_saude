@@ -115,12 +115,6 @@ exports.signin = async (req, res) => {
   });
 };
 
-// log out user
-exports.signout = async (req, res) => {
-  //code to signout
-  //to create a signout it is necessary to destroy the token, or send it to blacklist.
-};
-
 //register user
 exports.signup = async (req, res) => {
   //try to find a user by email in the DB
