@@ -34,19 +34,33 @@ const TableData = ({ data }) => {
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">Consulta</th>
-              <th scope="col">Data</th>
-              <th scope="col">Hora</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
             {data.length !== 0 ? (
-              data.map((el, index) => {
+              data.user.map((el, index) => {
                 return (
                   <tr key={el._id}>
-                    <td>{el.text}</td>
-                    <td>{el.start}</td>
-                    <td>{el.resource}</td>
+                    <td>{el.name}</td>
+                    <td>{el.email}</td>
+                    <td>
+                      <Link
+                        className="px-2 remove-color"
+                        to={"/profile/" + el._id}
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Edit"
+                      >
+                        <i className="fas fa-edit"></i>
+                      </Link>
+                      <i
+                        className="fas fa-trash-alt"
+                        onClick={deleteID(index, el._id)}
+                      ></i>
+                    </td>
                   </tr>
                 );
               })

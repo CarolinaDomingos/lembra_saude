@@ -24,10 +24,14 @@ async function updateAgendaByProfessional(payload) {
   );
   return res ? res.data : "username or password incorrect";
 }
-
 async function getUserAgenda() {
   const res = await axios.get(URL + "agenda/", config);
   return res.data;
 }
 
-export { updateAgenda, getUserAgenda, updateAgendaByProfessional };
+async function getConsults() {
+  const res = await axios.get(URL + "agenda/professionals/consults/", config);
+  return res.data;
+}
+
+export { updateAgenda, getUserAgenda, updateAgendaByProfessional, getConsults };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Menu from "../components/Menu";
 import { useHistory } from "react-router-dom";
-import * as tokeUser from "../../../Utils/localStorage";
+import * as tokenUser from "../../../Utils/localStorage";
 import Agenda from "./subPages/Agenda/Agenda";
 import Map from "./subPages/Map/Map";
 import FoodPlan from "./subPages/FoodPlan/FoodPlan";
@@ -26,7 +26,7 @@ const Dashboard = () => {
 
   // vai recolher informação dos utilizadores dependendo do tipo de user
   const getData = async (choice) => {
-    const user = JSON.parse(tokeUser.getUserId());
+    const user = JSON.parse(tokenUser.getUserId());
     //vamos para o perfil do admin
     if (choice === "Perfil") {
       goTo("profile/" + user._id);

@@ -1,0 +1,11 @@
+i {
+    cursor: pointer;   
+}
+
+.remove-color {
+    color: black;
+}
+
+.remove-color:hover {
+    color: black;
+}
