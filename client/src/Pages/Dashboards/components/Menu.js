@@ -35,20 +35,26 @@ const Menu = ({ list, setChoice }) => {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav ml-auto mr-auto">
+        <ul className="navbar-nav ml-auto ">
           {list.map((el, i) => {
             return (
-              <li 
-                className="nav-item px-3" key={i}
-                 onClick={handleData(el.name)}
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title={el.name}
+              <li
+                className="nav-item px-3 pt-2"
+                key={i}
+                onClick={handleData(el.name)}
+                data-toggle="tooltip"
+                data-placement="top"
+                title={el.name}
               >
-                  {el.icon}
+                {el.icon}
               </li>
             );
           })}
+          <li className="nav-item ml-5">
+            <Link className="btn btn-primary" to="/premium">
+              Seja Premium
+            </Link>
+          </li>
         </ul>
         <ul className="navbar-nav ml-auto pr-3">
           <li className="nav-item" onClick={logout()}>
