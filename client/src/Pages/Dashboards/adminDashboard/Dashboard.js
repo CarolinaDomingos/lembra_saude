@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import TableData from "../components/tableData";
+import TableData from "./components/TableData";
 import Menu from "../components/Menu";
 import { useHistory, Link } from "react-router-dom";
 import * as tokeUser from "../../../Utils/localStorage";
@@ -13,12 +13,11 @@ const Dashboard = () => {
   const goTo = useCallback((path) => history.push("/" + path), [history]);
   const menuList = [
     { icon: <i className="fas fa-user-alt "></i>, name: "Perfil" },
-    { icon: <i className="fas fa-calendar-alt "></i>, name: "Utentes" },
+    { icon: <i className="fas fa-user-friends"></i>, name: "Utentes" },
     {
-      icon: <i className="fas fa-h-square"></i>,
+      icon: <i className="fas fa-user-md"></i>,
       name: "Profissionais de Saude",
     },
-    { icon: <i className="fas fa-cog "></i>, name: "Definições" },
   ];
 
   // vai recolher informação dos utilizadores dependendo do tipo de user
@@ -35,13 +34,17 @@ const Dashboard = () => {
       const user = JSON.parse(tokeUser.getUserId());
       goTo("profile/" + user._id);
     }
-    //código para recolha de informação da BD
-    setData(response); //recebe a informação e guarda
+    if (response.user !== undefined) {
+      //código para recolha de informação da BD
+      setData(response.user); //recebe a informação e guarda
+    }
   };
 
   useEffect(() => {
     getData(menuChoice);
   }, [menuChoice]);
+
+  useEffect(() => {}, [data]);
 
   return (
     <div>

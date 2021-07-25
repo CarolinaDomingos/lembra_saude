@@ -1,0 +1,16 @@
+i, .fas {
+    cursor: pointer;   
+}
+
+.remove-color, .fas {
+    color: black;
+}
+
+.remove-color:hover {
+    color: black;
+}
+
+.btn1{
+    border: none;
+    background-color: transparent;
+}
