@@ -83,6 +83,16 @@ const routesConfig = [
     roles: ["professional"],
   },
   {
+    path: "/professional/newConsultation",
+    exact: true,
+    component: lazy(() =>
+      import(
+        "../Pages/Dashboards/professionalDashboard/components/newConsultation/newConsultation"
+      )
+    ),
+    roles: ["professional"],
+  },
+  {
     path: "/resetpassword",
     exact: true,
     component: lazy(() => import("../Pages/ResetPassword/ResetPassword")),

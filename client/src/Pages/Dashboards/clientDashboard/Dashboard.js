@@ -49,7 +49,7 @@ const Dashboard = () => {
           <Agenda />
         ) : menuChoice === "Mapa" ? (
           <Map />
-        ) : menuChoice === "FoodPlan" ? (
+        ) : menuChoice === "Plano Alimentar" ? (
           <FoodPlan />
         ) : (
           <></>

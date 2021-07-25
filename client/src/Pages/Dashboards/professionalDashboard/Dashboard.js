@@ -22,7 +22,7 @@ const Dashboard = () => {
       <Menu list={menuList} setChoice={setMenuChoice} />
       <div className="container">
         <div className="col-12 pt-5">
-          <Link className="btn btn-primary" to="/newuser">
+          <Link className="btn btn-primary" to="/professional/newConsultation">
             Agendar consulta
           </Link>
         </div>

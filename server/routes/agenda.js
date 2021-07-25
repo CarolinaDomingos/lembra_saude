@@ -9,5 +9,10 @@ const AgendaController = require("../controller/AgendaController");
 router.get("/", checkAuth, AgendaController.getUserAgenda);
 router.post("/create", checkAuth, AgendaController.createUserAgenda);
 router.put("/update/", checkAuth, AgendaController.update);
+router.put(
+  "/updatebyprofessional/",
+  checkAuth,
+  AgendaController.updateByProfessional
+);
 
 module.exports = router;

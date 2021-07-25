@@ -6,7 +6,7 @@ const { MESSAGES } = require("../constantes/consts.js");
 //Get all the users.
 exports.getAllUsers = async (req, res) => {
   //if its not and admin or if isn't the correct user will throw an json error
-  if (req._user.userType !== "admin") {
+  if (req._user.userType !== "admin" && req._user.userType !== "professional") {
     return res.status(401).json({ message: "You don't have permition" });
   }
   try {

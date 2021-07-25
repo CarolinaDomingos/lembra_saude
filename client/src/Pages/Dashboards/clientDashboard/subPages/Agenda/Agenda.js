@@ -34,6 +34,7 @@ const Agenda = () => {
   //recebe a informação da agenda vinda da BD
   const getAgenda = async () => {
     const { agenda } = await getUserAgenda();
+    console.log(agenda);
     const nevents = agenda[0].agenda;
     setAgenda(nevents);
   };
