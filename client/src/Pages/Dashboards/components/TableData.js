@@ -9,7 +9,7 @@ import "./TableData.css";
     and it will work the same for both.
 */
 const TableData = ({ data }) => {
-  const [nData, setnData] = useState(data);
+  const [nData, setnData] = useState(data.user);
   //necessário usar a data que vem do parent para preencher a tabela
   //efectuar paginação da tabela
   const deleteID = (i, _id) => (e) => {
@@ -25,8 +25,14 @@ const TableData = ({ data }) => {
     //remove profissional da base de dados
   };
 
+  useEffect(() => {
+    console.log(data);
+  }, []);
+
   //when data or nData change it will reload the table
-  useEffect(() => {}, [data, nData]);
+  useEffect(() => {
+    console.log(data);
+  }, [data, nData]);
 
   return (
     <div className="container">
@@ -41,7 +47,7 @@ const TableData = ({ data }) => {
           </thead>
           <tbody>
             {data.length !== 0 ? (
-              data.map((el, index) => {
+              data.user.map((el, index) => {
                 return (
                   <tr key={el._id}>
                     <td>{el.text}</td>

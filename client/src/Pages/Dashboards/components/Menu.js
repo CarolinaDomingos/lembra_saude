@@ -50,11 +50,6 @@ const Menu = ({ list, setChoice }) => {
               </li>
             );
           })}
-          <li className="nav-item ml-5">
-            <Link className="btn btn-primary" to="/premium">
-              Seja Premium
-            </Link>
-          </li>
         </ul>
         <ul className="navbar-nav ml-auto pr-3">
           <li className="nav-item" onClick={logout()}>
