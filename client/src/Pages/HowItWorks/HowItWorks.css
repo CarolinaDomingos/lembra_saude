@@ -1,15 +1,26 @@
-.registar, .pagar, .organizar{
+h1{
+    text-align: center;
+    margin-top: 5%;
+}
+.card{
     border: 1px solid black;
     width: 200px;
     height: 100px;
     display: inline-block;
-    margin-left: 10%;
+    margin-left: 12%;
     margin-top: 10%;
 }
-i{
-
-}
-h6{
-    margin-top: 10%;
+.card-title{
+    display: inline-block;
+    margin-left: 40%;
 }
 
+.card-text{
+    display: inline-block;
+    margin-left: 25%;
+}
+
+.card-text-pay{
+    display: inline-block;
+    margin-left: 35%;
+}

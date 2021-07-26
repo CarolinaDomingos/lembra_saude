@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUser } from "../../Services/user";
 import { update } from "../../Services/user";
+import "./Profile.css"
 
 const Profile = (props) => {
   const [user, setUser] = useState({});
@@ -83,10 +84,10 @@ const Profile = (props) => {
             value={formData.password}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="mt-4">
           Atualizar
         </button>
-        <Link to={"/" + user.userType} className="mx-4">
+        <Link to={"/" + user.userType} className="other mt-3 mx-4">
           cancelar
         </Link>
       </form>
