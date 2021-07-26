@@ -1,0 +1,59 @@
+.price_free{
+    border: 1px solid black;
+    width: 400px;
+    height:300px;
+    text-align: center;
+    margin-left: 15%;
+    margin-top: 5%;
+    display: inline-block;
+}
+.price_free .row{
+    margin: auto;
+    display: inline;
+}
+.price_free h5{
+    background-color: #44D113;
+    color: white;
+}
+.price_free p{
+    text-align: left;
+}
+.price_free ul{
+    text-align: left;
+    list-style-position: inside;
+}
+.price_free label{
+    background-color: #44D113;
+    color: white;
+}
+.price_paid{
+    border: 1px solid black;
+    width: 400px;
+    height: 300px;
+    text-align: center;
+    margin-left: 10%;
+    margin-top: 5%;
+    display: inline-block;
+}
+.price_paid .row{
+    margin: auto;
+    display: inline;
+}
+.price_paid h5{
+    background-color: #44D113;
+    color: white;
+}
+.price_paid p{
+    text-align: left;
+}
+.price_paid ul{
+    text-align: left;
+    list-style-position: inside;
+}
+.price_paid label{
+    background-color: #44D113;
+    color: white;
+}
+p{
+    margin-left: 2%;
+}

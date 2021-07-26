@@ -110,6 +110,16 @@ const routesConfig = [
     roles: ["client", "admin", "professional"],
   },
   {
+    path: "/HowItWorks",
+    exact: true,
+    component: lazy(() => import("../Pages/HowItWorks/HowItWorks")),
+  },
+  {
+    path: "/Price",
+    exact: true,
+    component: lazy(() => import("../Pages/Price/Price")),
+  },
+  {
     component: () => <Redirect to="/page-not-found" />,
   },
 ];

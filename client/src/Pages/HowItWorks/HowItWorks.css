@@ -1,0 +1,15 @@
+.registar, .pagar, .organizar{
+    border: 1px solid black;
+    width: 200px;
+    height: 100px;
+    display: inline-block;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+i{
+
+}
+h6{
+    margin-top: 10%;
+}
+
