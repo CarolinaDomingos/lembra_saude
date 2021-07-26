@@ -1,28 +1,42 @@
-const UserModel = require("../models/UserModel");
+const PaymentModel = require("../models/PaymentModel");
 require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE_API_SECRET);
 
 exports.payment = async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: [
-      {
-        price_data: {
-          currency: "eur",
-          product_data: {
-            name: "Premium Access",
-            images: [
-              "https://www.hookahforum.com/uploads/monthly_2015_10/PremiumMember.jpg.4d12f509cf1eb6bf439d1dc9134ccd03.jpg",
-            ],
-          },
-          unit_amount: 500,
-        },
-        quantity: 1,
-      },
-    ],
-    mode: "payment",
-    success_url: `${YOUR_DOMAIN}?success=true`,
-    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+  if (
+    req.body.cardNumber === "" ||
+    req.body.validation === "" ||
+    req.body.ccv === ""
+  ) {
+    return res
+      .status(400)
+      .json({ message: "Por favor preencha todos os campos" });
+  }
+
+  // cria pagamento
+  let payments = await new PaymentModel({
+    cardNumber: req.body.cardNumber,
+    validation: req.body.validation,
+    ccv: req.body.ccv,
+    userId: req.body.userId,
+    paid: true,
   });
-  res.json({ id: session.id });
+
+  if (payments) {
+    //saving
+    payments.save((error) => {
+      if (error) {
+        return res.status(400).json({ error });
+      } else {
+        return res.status(200).json({ message: "Pagamento Efetuado!" });
+      }
+    });
+  }
+};
+
+exports.getPayment = async (req, res) => {
+  // get payment by user
+  let payments = await PaymentModel.find({ userId: req.params.id });
+  if (payments) {
+    return res.status(200).json({ payments });
+  }
 };

@@ -5,6 +5,7 @@ require("dotenv").config();
 //controllers
 const AuthController = require("../controller/PaymentController");
 
-router.post("/payment", AuthController.payment);
+router.post("/pay", AuthController.payment);
+router.get("/payment/:id", AuthController.getPayment);
 
 module.exports = router;
