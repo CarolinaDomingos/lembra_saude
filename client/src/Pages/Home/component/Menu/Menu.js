@@ -20,6 +20,7 @@ const Menu = () => {
   };
 
   useEffect(() => {
+    console.log(JSON.parse(getUserId()));
     setUsers(JSON.parse(getUserId()));
   }, []);
 
@@ -58,7 +59,7 @@ const Menu = () => {
             </Link>
           </li>
         </ul>
-        {!user ? (
+        {Boolean(user) ? (
           <ul className="navbar-nav ml-auto col-4">
             <li className="nav-item pt-2 mx-5">
               <Link to="/login" className="color">
