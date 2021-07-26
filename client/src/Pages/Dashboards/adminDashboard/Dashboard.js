@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import TableData from "../components/tableData";
+import TableData from "../components/TableData";
 import Menu from "../components/Menu";
 import { useHistory, Link } from "react-router-dom";
 import * as tokeUser from "../../../Utils/localStorage";
