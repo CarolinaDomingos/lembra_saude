@@ -42,38 +42,42 @@ const Register = () => {
     <div className="container">
       <div className="row">
         <form onSubmit={handleSubmit(formData)}>
+          <div className="title form-group">
+            <h5>Registar</h5>
+          </div>
           <div className="form-group">
-            <label htmlFor="email">Email address</label>
+            <label className="mt-3" htmlFor="email">E-mail</label>
             <input
               type="email"
               name="email"
-              className="form-control"
+              className="in form-control mt-1"
               id="email"
               aria-describedby="emailHelp"
               onChange={handleData("email")}
               value={formData.email}
+              required
             />
             <small id="emailHelp" className="form-text text-muted">
-              We'll never share your email with anyone else.
+              Não vamos partilhar o seu e-mail com ninguém.
             </small>
           </div>
           <div className="form-group">
-            <label htmlFor="name">Full name</label>
+            <label className="mt-3" htmlFor="name">Nome Completo</label>
             <input
               type="text"
               name="name"
-              className="form-control"
+              className="in form-control mt-1"
               id="name"
               onChange={handleData("name")}
               value={formData.name}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="exampleInputEmail1">NISS</label>
+            <label className="mt-3" htmlFor="exampleInputEmail1">NISS</label>
             <input
               type="number"
               name="niss"
-              className="form-control"
+              className="in form-control mt-1"
               id="niss"
               max="999999999"
               onChange={handleData("niss")}
@@ -81,17 +85,18 @@ const Register = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="exampleInputPassword1">Password</label>
+            <label className="mt-3" htmlFor="exampleInputPassword1">Palavra-passe</label>
             <input
               type="password"
-              className="form-control"
+              className="in form-control mt-1"
               id="exampleInputPassword1"
               onChange={handleData("password")}
               value={formData.password}
+              required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
+          <button type="submit" className="mt-3">
+            Submeter
           </button>
         </form>
       </div>

@@ -3,7 +3,7 @@ import Menu from "../components/Menu";
 import { useHistory, Link } from "react-router-dom";
 import { getUserId } from "../../../Utils/localStorage";
 import { getConsults } from "../../../Services/agenda";
-import TableData from "../components/tableData";
+import TableData from "../components/TableData";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);

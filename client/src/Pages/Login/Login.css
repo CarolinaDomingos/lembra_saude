@@ -1,0 +1,41 @@
+body{
+    background-color: #2F900D;
+}
+.row{
+    background-color: white;
+    width: 412px;
+    height: 500px;
+    text-align: center;
+    margin-left: 35%;
+    margin-top: 5%;
+    border-radius: 20px;  
+}
+.in{
+    width: 200px;
+    border: transparent;
+    border-bottom: 1px solid black;
+    border-radius: 0%;
+    margin: auto;
+}
+.title{
+    background-color: #44D113;
+    width: 412px;
+    height: 60px; 
+    padding-top: 15px;  
+    color: white;
+    border-radius: 20px 20px 0px 0px;
+    margin-left: 0px;
+}
+button{
+    background-color: #44D113;
+    color: white;
+    border-radius: 10px 10px 10px 10px;
+    margin-left: 12px; 
+    width: 180px;
+    height: 45px;
+    border:transparent;
+}
+
+.other{
+    color: #2E970A;
+}
