@@ -20,7 +20,6 @@ const Menu = () => {
   };
 
   useEffect(() => {
-    console.log(JSON.parse(getUserId()));
     setUsers(JSON.parse(getUserId()));
   }, []);
 

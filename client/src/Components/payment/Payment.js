@@ -31,11 +31,11 @@ const Payment = () => {
         <h1>5€/mensal</h1>
       </div>
       <form className="col-4 mx-auto" onSubmit={pays(formData)}>
-        <div class="form-group">
+        <div className="form-group">
           <label for="creditCard">Cartão de Crédito</label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="creditCard"
             placeholder="0000 0000 0000 0000"
             maxLength="16"
@@ -43,11 +43,11 @@ const Payment = () => {
             value={formData.cardNumber}
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label for="exampleInputPassword1">validade</label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="validation"
             placeholder="mm/aa"
             maxLength="5"
@@ -55,11 +55,11 @@ const Payment = () => {
             value={formData.validation}
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label for="ccv">CCV</label>
           <input
             type="number"
-            class="form-control"
+            className="form-control"
             id="ccv"
             placeholder="ccv"
             maxLength="3"
@@ -67,7 +67,7 @@ const Payment = () => {
             value={formData.ccv}
           />
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Pagar
         </button>
       </form>
