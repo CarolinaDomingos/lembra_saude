@@ -4,11 +4,12 @@ exports.getUserAgenda = async (req, res) => {
   const _id = req._user.id;
   // try to find the user
   const agenda = await AgendaModel.find({ userId: _id });
-  //if its not and admin or if isn't the correct user will throw an json error
-  if (_id !== agenda[0].userId) {
-    return res.status(401).json({ message: "You don't have permition" });
+  if (agenda.length > 0) {
+    //if its not and admin or if isn't the correct user will throw an json error
+    if (_id !== agenda[0].userId) {
+      return res.status(401).json({ message: "You don't have permition" });
+    }
   }
-
   return res.status(200).json({ agenda });
 };
 
@@ -24,7 +25,7 @@ exports.createUserAgenda = async (req, res) => {
     //saving
     agenda.save((error) => {
       if (error) {
-        console.log(error);
+        return res.status(400).json({ error });
       } else {
         return res.status(200).json({ agenda });
       }
@@ -37,27 +38,22 @@ exports.update = async (req, res) => {
 
   // try to find the user
   const agenda = await AgendaModel.find({ userId: _id });
-  //if its not a professional or if isn't the correct user will throw an json error
-  if (
-    _id !== agenda[0].userId &&
-    _id !== agenda[0].professionalId &&
-    agenda[0].professionalId !== ""
-  ) {
-    return res.status(401).json({ message: "You don't have permition" });
+  console.log(agenda);
+
+  if (agenda.length > 0) {
+    //if its not a professional or if isn't the correct user will throw an json error
+    if (
+      _id !== agenda[0].userId &&
+      _id !== agenda[0].professionalId &&
+      agenda[0].professionalId !== ""
+    ) {
+      return res.status(401).json({ message: "You don't have permition" });
+    }
   }
-  var newBody = {
-    text: req.body.text,
-    start: req.body.start,
-    end: req.body.end,
-    resource: req.body.resource,
-    barColor: req.body.barColor,
-    barBackColor: req.body.barBackColor,
-    professionalId: req.body.professionalId,
-  };
 
   const Params = {
     userId: _id,
-    agenda: req.body.agenda ? req.body.agenda : agenda,
+    agenda: req.body,
   };
   const result = await AgendaModel.updateOne({ userId: _id }, { $set: Params });
 
@@ -78,7 +74,6 @@ exports.updateByProfessional = async (req, res) => {
   var user = await AgendaModel.find({ userId: _id });
 
   if (user.length === 0) {
-    console.log("user not defined");
     // cria agenda do utilizador na BD
     let agenda = new AgendaModel({
       userId: _id,
@@ -88,14 +83,12 @@ exports.updateByProfessional = async (req, res) => {
       //saving
       agenda.save((error) => {
         if (error) {
-          console.log(error);
-          return;
+          return res.status(400).error({ error });
         }
       });
     }
   }
   user = await AgendaModel.find({ userId: _id });
-  console.log(user);
   var count = 0;
   if (user[0].agenda.length === 0) {
     count = 1;
@@ -114,8 +107,6 @@ exports.updateByProfessional = async (req, res) => {
   };
 
   user[0].agenda = [...user[0].agenda, newBody];
-
-  console.log("after: ", user[0].agenda);
 
   const Params = {
     userId: _id,

@@ -81,7 +81,6 @@ const handleEmail = (subject, emails, message) => {
 
 //log in user by email
 exports.signin = async (req, res) => {
-  console.log(req.body);
   const user = await UserModel.findOne({
     email: req.body.email,
   })
@@ -165,7 +164,6 @@ exports.signup = async (req, res) => {
     password: req.body.password,
     userType: req.body.userType,
   });
-  console.log(user);
   //Save user in the Database
   if (user) {
     //sends email to user
