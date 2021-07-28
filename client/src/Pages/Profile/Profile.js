@@ -52,10 +52,11 @@ const Profile = (props) => {
 
   return (
     <div className="container">
-      <h1>Profile Page</h1>
-      <form noValidate autoComplete="off" onSubmit={handleSubmit(formData)}>
+      <div className="row">
+      <h1 className="title">Profile Page</h1>
+      <form noValidate autoComplete="off" onSubmit={handleSubmit(formData)} className="col-12">
         <div className="form-group">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">Nome</label>
           <input
             type="text"
             className="form-control"
@@ -66,7 +67,7 @@ const Profile = (props) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">E-mail</label>
           <input
             type="text"
             className="form-control"
@@ -76,7 +77,7 @@ const Profile = (props) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Palavra-passe</label>
           <input
             type="password"
             className="form-control"
@@ -91,6 +92,7 @@ const Profile = (props) => {
           cancelar
         </Link>
       </form>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { reset } from "../../Services/auth";
 import { Link } from "react-router-dom";
-
+import "./ResetPassword.css"
 const ResetPassword = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -21,10 +21,10 @@ const ResetPassword = () => {
 
   return (
     <div className="container">
-      <div className="row">
+      <div>
         <form onSubmit={handleSubmit(formData)}>
-          <div className="form-group">
-            <label htmlFor="exampleInputEmail1">Email address</label>
+          <div className="form-group mt-5">
+            <label htmlFor="exampleInputEmail1">E-mail</label>
             <input
               type="email"
               className="form-control"
@@ -35,14 +35,14 @@ const ResetPassword = () => {
               value={formData.username}
             />
           </div>
-          <div className="row">
+          <div className="row d-flex justify-content-center">
             <div className="col-4">
-              <button type="submit" className="btn btn-primary">
-                Reset
+              <button type="submit">
+                Redefinir
               </button>
             </div>
-            <div className="col-4">
-              <Link to="/login">Login</Link>
+            <div className="col-4 mt-2">
+              <Link to="/login" className="other">Login</Link>
             </div>
           </div>
         </form>
