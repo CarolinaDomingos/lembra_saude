@@ -3,6 +3,7 @@ import { login } from "../../Services/auth";
 import { useHistory, Link } from "react-router-dom";
 import "./Login.css";
 import { setUser, setToken } from "../../Utils/localStorage";
+import Menu from "../Home/component/Menu/Menu";
 
 const Login = () => {
   //history it is necessary because I'm going to redirect to some page when necessary
@@ -42,50 +43,66 @@ const Login = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <form onSubmit={handleSubmit(formData)}>
-          <div className="form-group">
-            <h3 className="title">Iniciar Sessão</h3>
-            <label htmlFor="exampleInputEmail1" className="mt-3">E-mail</label>
-            <input
-              type="email"
-              className="in form-control"
-              id="email"
-              name="email"
-              aria-describedby="emailHelp"
-              onChange={handleData("email")}
-              value={formData.username}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="exampleInputPassword1" className="mt-3">Palavra-passe</label>
-            <input
-              type="password"
-              className="in form-control"
-              id="password"
-              name="password"
-              onChange={handleData("password")}
-              value={formData.password}
-              required
-            />
-          </div>
-          <div className="form-group form-check">
-            {/* Similiar to a href, but here it is a react route link */}
-            <Link to="/resetpassword" className="other mt-3">Relembrar palavra-passe</Link> {"\u00A0"}
-            <Link to="/signup" className="other mt-3">Novo utilizador</Link>
-          </div>
-          <div className="form-group form-check">
-            <input type="checkbox" className="form-check-input mt-4" id="checkbox" />
-            <label className="form-check-label mt-3" htmlFor="checkbox">
-              Manter-se logado
-            </label>
-          </div>
-          <button type="submit" className="mt-4">
-            Submeter
-          </button>
-        </form>
+    <div>
+      <Menu />
+      <div className="container">
+        <div className="row">
+          <form onSubmit={handleSubmit(formData)}>
+            <div className="form-group">
+              <h3 className="title">Iniciar Sessão</h3>
+              <label htmlFor="exampleInputEmail1" className="mt-3">
+                E-mail
+              </label>
+              <input
+                type="email"
+                className="in form-control"
+                id="email"
+                name="email"
+                aria-describedby="emailHelp"
+                onChange={handleData("email")}
+                value={formData.username}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="exampleInputPassword1" className="mt-3">
+                Palavra-passe
+              </label>
+              <input
+                type="password"
+                className="in form-control"
+                id="password"
+                name="password"
+                onChange={handleData("password")}
+                value={formData.password}
+                required
+              />
+            </div>
+            <div className="form-group form-check">
+              {/* Similiar to a href, but here it is a react route link */}
+              <Link to="/resetpassword" className="other mt-3">
+                Relembrar palavra-passe
+              </Link>{" "}
+              {"\u00A0"}
+              <Link to="/signup" className="other mt-3">
+                Novo utilizador
+              </Link>
+            </div>
+            <div className="form-group form-check">
+              <input
+                type="checkbox"
+                className="form-check-input mt-4"
+                id="checkbox"
+              />
+              <label className="form-check-label mt-3" htmlFor="checkbox">
+                Manter-se logado
+              </label>
+            </div>
+            <button type="submit" className="mt-4">
+              Submeter
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

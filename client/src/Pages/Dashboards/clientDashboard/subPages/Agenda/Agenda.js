@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { DayPilot, DayPilotScheduler } from "daypilot-pro-react";
-import { updateAgenda, getUserAgenda } from "../../../../../Services/agenda";
+import * as tokenUser from "../../../../../Utils/localStorage";
+import {
+  updateAgenda,
+  getUserAgenda,
+  createUserAgenda,
+} from "../../../../../Services/agenda";
 import "./Agenda.css";
 const Agenda = () => {
-  const [month, setMonth] = useState("10");
-  const [year, setYear] = useState(2021);
+  const user = JSON.parse(tokenUser.getUserId());
+  var months = new Date().getMonth() + 1;
+  var years = new Date().getFullYear();
+  months = months < 10 ? "0" + months.toString() : months;
+  const [month, setMonth] = useState(months);
+  const [year, setYear] = useState(years);
   // guarda todos os eventos do calendário do utilizador
   const [agenda, setAgenda] = useState([]);
 
@@ -34,9 +43,16 @@ const Agenda = () => {
   //recebe a informação da agenda vinda da BD
   const getAgenda = async () => {
     const { agenda } = await getUserAgenda();
-    console.log(agenda);
-    const nevents = agenda[0].agenda;
-    setAgenda(nevents);
+    if (agenda > 0) {
+      const nevents = agenda[0].agenda;
+      setAgenda(nevents);
+    } else {
+      const params = {
+        userId: user._id,
+        agenda: [],
+      };
+      createUserAgenda(params);
+    }
   };
 
   //atualiza quando a página inicia pela primeira vez
@@ -136,7 +152,7 @@ const Agenda = () => {
     const newAgenda = event.events;
     if (res) {
       newAgenda.push({
-        id: agenda[agenda.length - 1].id + 1,
+        id: agenda.length > 0 ? agenda[agenda.length - 1].id + 1 : 1,
         text: res.result,
         start: args.start,
         end: args.end,

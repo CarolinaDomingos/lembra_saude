@@ -19,7 +19,9 @@ const Advertises = () => {
 
   const getPayments = async () => {
     let alreadyPaid = await getPayment(JSON.parse(getUserId())._id);
-    setPaid(alreadyPaid.payments[0].paid);
+    if (alreadyPaid.payments.length !== 0) {
+      setPaid(alreadyPaid.payments[0].paid);
+    }
   };
 
   useEffect(() => {

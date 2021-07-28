@@ -29,9 +29,20 @@ async function getUserAgenda() {
   return res.data;
 }
 
+async function createUserAgenda(payload) {
+  const res = await axios.post(URL + "agenda/create", payload, config);
+  return res.data;
+}
+
 async function getConsults() {
   const res = await axios.get(URL + "agenda/professionals/consults/", config);
   return res.data;
 }
 
-export { updateAgenda, getUserAgenda, updateAgendaByProfessional, getConsults };
+export {
+  updateAgenda,
+  getUserAgenda,
+  updateAgendaByProfessional,
+  getConsults,
+  createUserAgenda,
+};

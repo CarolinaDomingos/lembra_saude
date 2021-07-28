@@ -19,9 +19,16 @@ const Menu = () => {
     goTo();
   };
 
+  const getUser = () => {
+    const users = JSON.parse(getUserId());
+    setUsers(users);
+  };
+
   useEffect(() => {
-    setUsers(JSON.parse(getUserId()));
+    getUser();
   }, []);
+
+  useEffect(() => {}, [user]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light ">
@@ -52,13 +59,17 @@ const Menu = () => {
               Preçário
             </Link>
           </li>
-          <li className="nav-item ">
-            <Link className="btn btn-primary" to="/premium">
-              Seja Premium
-            </Link>
-          </li>
+          {Boolean(user) ? (
+            <li className="nav-item ">
+              <Link className="btn btn-primary" to="/premium">
+                Seja Premium
+              </Link>
+            </li>
+          ) : (
+            <></>
+          )}
         </ul>
-        {Boolean(user) ? (
+        {!Boolean(user) ? (
           <ul className="navbar-nav ml-auto col-4">
             <li className="nav-item pt-2 mx-5">
               <Link to="/login" className="color">

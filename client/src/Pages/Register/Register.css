@@ -4,7 +4,20 @@ body{
 .in{
     border: transparent;
     border-bottom: 1px solid black;
+    -webkit-appearance: none;
 }
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .row{
     background-color: white;
     width: 400px;
