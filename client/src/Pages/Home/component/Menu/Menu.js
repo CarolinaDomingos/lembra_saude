@@ -50,7 +50,7 @@ const Menu = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav ml-auto mr-auto col-7">
           <li className="nav-item mx-5 pt-2">
-            <Link to="/about" className="color">
+            <Link to="/howitworks" className="color">
               Como Funciona
             </Link>
           </li>

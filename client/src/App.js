@@ -22,16 +22,16 @@ function App() {
     );
   }
 
-  if (!token && location !== "/login") {
+  /*   if (!token && location !== "/login") {
     return (
       <Redirect
         to={{
-          pathname: "/login",
+          pathname: "/",
           state: { from: location },
         }}
       />
     );
-  }
+  } */
   return <Routes user={user} />;
 }
 
