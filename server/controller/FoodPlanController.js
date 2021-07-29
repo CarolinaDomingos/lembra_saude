@@ -6,6 +6,7 @@ exports.getPlan = async (req, res) => {
   let plan = await FoodPlanModel.find({
     userId: _id,
   });
+
   if (plan) {
     const data = plan[0].plan;
     return res.status(200).json({ data });
@@ -68,4 +69,20 @@ exports.addPlan = async (req, res) => {
   }
 
   return res.status(400).json({ message: "Não foi possivel atualizar" });
+};
+
+exports.deleteCardFromPlan = async (req, res) => {
+  const _id = req._user._id;
+  console.log(user);
+  // cria agenda do utilizador na BD
+  let userPlan = await FoodPlanModel.find({
+    userId: _id,
+  });
+  console.log(req.body);
+  const Params = {
+    plan: plans,
+    userId: _id,
+  };
+  // cria agenda do utilizador na BD
+  /* newplan = await FoodPlanModel.updateOne({ userId: _id }, { $set: Params }); */
 };

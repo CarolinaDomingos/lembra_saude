@@ -121,6 +121,34 @@ exports.updateByProfessional = async (req, res) => {
   return res.status(400).json({ message: "Não foi possivel atualizar" });
 };
 
+exports.deleteByProfessional = async (req, res) => {
+  //if its not a professional or if isn't the correct user will throw an json error
+  if (req._user.userType !== "professional") {
+    return res.status(401).json({ message: "You don't have permition" });
+  }
+  const _id = req.body.userId;
+  console.log(req.body._id);
+  // try to find the user
+  var user = await AgendaModel.find({ userId: _id });
+
+  for (let i = 0; i < user[0].agenda.length; i++) {
+    if (user[0].agenda[i]._id == req.body._id) {
+      user[0].agenda.splice(i, 1);
+    }
+  }
+  const Params = {
+    userId: _id,
+    agenda: user[0].agenda,
+  };
+  const result = await AgendaModel.updateOne({ userId: _id }, { $set: Params });
+
+  if (result) {
+    return res.status(200).json({ message: "Agendamento eliminado!" });
+  }
+
+  return res.status(400).json({ message: "Não foi possivel atualizar" });
+};
+
 exports.getConsults = async (req, res) => {
   //if its not a professional or if isn't the correct user will throw an json error
   if (req._user.userType !== "professional") {

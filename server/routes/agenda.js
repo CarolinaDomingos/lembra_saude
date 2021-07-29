@@ -14,6 +14,11 @@ router.put(
   checkAuth,
   AgendaController.updateByProfessional
 );
+router.put(
+  "/deletebyprofessional/",
+  checkAuth,
+  AgendaController.deleteByProfessional
+);
 router.get("/professionals/consults/", checkAuth, AgendaController.getConsults);
 
 module.exports = router;
