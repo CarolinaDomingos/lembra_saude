@@ -73,16 +73,27 @@ exports.addPlan = async (req, res) => {
 
 exports.deleteCardFromPlan = async (req, res) => {
   const _id = req._user._id;
-  console.log(user);
   // cria agenda do utilizador na BD
   let userPlan = await FoodPlanModel.find({
     userId: _id,
   });
-  console.log(req.body);
+
+  for (let i = 0; i < userPlan[0].plan.length; i++) {
+    if (userPlan[0].plan[i]._id == req.body._id) {
+      console.log("here");
+      userPlan[0].plan.splice(i, 1);
+    }
+  }
   const Params = {
-    plan: plans,
+    plan: userPlan[0].plan,
     userId: _id,
   };
   // cria agenda do utilizador na BD
-  /* newplan = await FoodPlanModel.updateOne({ userId: _id }, { $set: Params }); */
+  newplan = await FoodPlanModel.updateOne({ userId: _id }, { $set: Params });
+
+  if (newplan) {
+    return res.status(200).json({ message: "Atualizado!" });
+  }
+
+  return res.status(400).json({ message: "Não foi possivel atualizar" });
 };

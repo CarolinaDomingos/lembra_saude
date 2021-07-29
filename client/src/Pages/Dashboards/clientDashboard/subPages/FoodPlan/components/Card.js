@@ -3,13 +3,15 @@ import { deleteCardFoodPlan } from "../../../../../../Services/foodplan";
 import "./Card.css";
 
 const Card = ({ data }) => {
-  const deleteCard = () => {
+  const deleteCard = async () => {
     const response = window.confirm(
       "está prestes a eliminar o cartão: " + data.title + ", deseja continuar?"
     );
     if (response) {
-      deleteCardFoodPlan(data);
-      alert("eliminado");
+      const { message } = await deleteCardFoodPlan(data);
+      if (message) {
+        alert(message);
+      }
     }
   };
 

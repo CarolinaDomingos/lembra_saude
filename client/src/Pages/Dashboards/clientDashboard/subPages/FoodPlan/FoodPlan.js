@@ -15,7 +15,6 @@ const FoodPlan = () => {
 
   const getPlan = async () => {
     const data = await getUserFoodPlan();
-    console.log(data.data);
     data.data.sort((a, b) => (a.hora < b.hora ? -1 : a.hora > b.hora ? 1 : 0));
     setPlan(data.data);
   };
@@ -49,7 +48,7 @@ const FoodPlan = () => {
         </div>
         <div className="ml-auto">
           {addPlan ? (
-            <button className="btn btn-danger">Eliminar Plano</button>
+            <></>
           ) : (
             <button
               className="btn btn-primary"
