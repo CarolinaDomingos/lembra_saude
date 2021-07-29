@@ -43,7 +43,8 @@ const Agenda = () => {
   //recebe a informação da agenda vinda da BD
   const getAgenda = async () => {
     const { agenda } = await getUserAgenda();
-    if (agenda > 0) {
+    console.log(agenda.length);
+    if (agenda.length > 0) {
       const nevents = agenda[0].agenda;
       setAgenda(nevents);
     } else {
@@ -95,13 +96,13 @@ const Agenda = () => {
     const colorPicker =
       colors[parseInt(Math.floor(Math.random() * colors.length))];
 
-    let i = 0;
+    let i = -1;
     for (let x = 0; x < agenda.length; x++) {
       if (agenda[x].id === args.e.data.id) {
         i = x;
       }
     }
-    if (i === 0) return;
+    if (i === -1) return;
     const newAgenda = agenda;
     newAgenda[i] = {
       id: newAgenda[i].id,

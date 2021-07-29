@@ -19,4 +19,9 @@ async function addFoodPlan(payload) {
   return res.data;
 }
 
-export { getUserFoodPlan, addFoodPlan };
+async function deleteCardFoodPlan(payload) {
+  const res = await axios.put(URL + "foodplan/delete", payload, config);
+  return res.data;
+}
+
+export { getUserFoodPlan, addFoodPlan, deleteCardFoodPlan };

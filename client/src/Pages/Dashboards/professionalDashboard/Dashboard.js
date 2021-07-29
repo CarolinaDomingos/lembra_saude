@@ -3,7 +3,7 @@ import Menu from "../components/Menu";
 import { useHistory, Link } from "react-router-dom";
 import { getUserId } from "../../../Utils/localStorage";
 import { getConsults } from "../../../Services/agenda";
-import TableData from "../components/TableData";
+import TableData from "./components/TableData/tableData";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -26,13 +26,26 @@ const Dashboard = () => {
 
   const getConsultations = async () => {
     const { agenda } = await getConsults();
-    console.log(agenda);
     var consults = [];
     const userId = JSON.parse(getUserId())._id;
     for (let i = 0; i < agenda.length; i++) {
       for (let j = 0; j < agenda[i].agenda.length; j++) {
         if (agenda[i].agenda[j].professionalId === userId) {
-          consults.push(agenda[i].agenda[j]);
+          consults = [
+            ...consults,
+            {
+              _id: agenda[i].agenda[j]._id,
+              id: agenda[i].agenda[j].id,
+              text: agenda[i].agenda[j].text,
+              start: agenda[i].agenda[j].start,
+              end: agenda[i].agenda[j].end,
+              resource: agenda[i].agenda[j].resource,
+              barColor: agenda[i].agenda[j].barColor,
+              barBackColor: agenda[i].agenda[j].barBackColor,
+              professionalId: agenda[i].agenda[j].professionalId,
+              userId: agenda[i].userId,
+            },
+          ];
         }
       }
     }

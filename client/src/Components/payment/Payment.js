@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-
+import React, { useState, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import { pay } from "../../Services/payments";
 import { getUserId } from "../../Utils/localStorage";
 
 const Payment = () => {
+  const history = useHistory();
+  //redirecting...
+  const goTo = useCallback((path) => history.push("/client"), [history]);
   // This is a state where I'm going to save the email and password from the inputs
   const [formData, setFormData] = useState({
     cardNumber: "",
@@ -14,7 +17,10 @@ const Payment = () => {
 
   const pays = () => async (event) => {
     event.preventDefault();
-    await pay(formData);
+    const res = await pay(formData);
+    if (res) {
+      goTo();
+    }
   };
 
   // add all the info in the formData object received from the inputs
@@ -69,6 +75,9 @@ const Payment = () => {
         </div>
         <button type="submit" className="btn btn-primary">
           Pagar
+        </button>
+        <button type="submit" className="btn" onClick={() => goTo()}>
+          Cancelar
         </button>
       </form>
     </div>

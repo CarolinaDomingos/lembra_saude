@@ -31,8 +31,14 @@ const NewConsultation = () => {
       professionalId: JSON.parse(getUserId())._id,
       userId: formData.clientId,
     };
-
-    await updateAgendaByProfessional(newFormData);
+    if (
+      /((0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])-[12]\d{3})/.test(formData.day)
+    ) {
+      const { message } = await updateAgendaByProfessional(newFormData);
+      alert(message);
+    } else {
+      alert("Formato de data incorrecto!");
+    }
   };
 
   //guarda as alterações no state formData

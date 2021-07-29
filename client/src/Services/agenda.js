@@ -24,6 +24,16 @@ async function updateAgendaByProfessional(payload) {
   );
   return res ? res.data : "username or password incorrect";
 }
+
+//update user agenda by a professional
+async function deleteAgendaByProfessional(payload) {
+  const res = await axios.put(
+    URL + "agenda/deletebyprofessional/",
+    payload,
+    config
+  );
+  return res ? res.data : "username or password incorrect";
+}
 async function getUserAgenda() {
   const res = await axios.get(URL + "agenda/", config);
   return res.data;
@@ -45,4 +55,5 @@ export {
   updateAgendaByProfessional,
   getConsults,
   createUserAgenda,
+  deleteAgendaByProfessional,
 };

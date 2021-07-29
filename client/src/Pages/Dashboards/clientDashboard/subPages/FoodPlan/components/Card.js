@@ -1,13 +1,21 @@
 import React, { useEffect } from "react";
-
+import { deleteCardFoodPlan } from "../../../../../../Services/foodplan";
 import "./Card.css";
 
 const Card = ({ data }) => {
-  useEffect(() => {
-    console.log(data);
-  }, []);
+  const deleteCard = () => {
+    const response = window.confirm(
+      "está prestes a eliminar o cartão: " + data.title + ", deseja continuar?"
+    );
+    if (response) {
+      deleteCardFoodPlan(data);
+      alert("eliminado");
+    }
+  };
+
+  useEffect(() => {}, []);
   return (
-    <div className="card my-3">
+    <div className="card my-3" onClick={() => deleteCard(data._id)}>
       <div className="card-body">
         <h2 className="card-title ml-3">{data.title}</h2>
         <div className="row">

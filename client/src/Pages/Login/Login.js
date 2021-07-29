@@ -31,6 +31,7 @@ const Login = () => {
       });
     } catch (e) {
       console.log(e);
+      alert("email e/ou palvra-chave incorrecto(s)");
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { Link } from "react-router-dom";
-import { deleteUser } from "../../../Services/user";
 import "./TableData.css";
+import { deleteAgendaByProfessional } from "../../../../../Services/agenda";
 /* 
     This component can work for users and Professional's information
     This tipe of component it is a reusable component, that means it not be necessary to create multiple
@@ -12,18 +12,23 @@ const TableData = ({ data }) => {
   const [nData, setnData] = useState(data);
   //necessário usar a data que vem do parent para preencher a tabela
   //efectuar paginação da tabela
-  const deleteID = (i, _id) => (e) => {
+  const deleteID = (i, _id) => async (e) => {
     e.preventDefault();
     const isdeleted = window.confirm("Deseja continuar?");
-
     if (isdeleted) {
-      deleteUser(_id); // faz a chamada ao server para remover o utilizador da bd
-      data = data.user.splice(i, 1);
-      setnData(data);
+      const { message } = await deleteAgendaByProfessional(data[i]);
+      if (message) {
+        data = data.splice(i, 1);
+        setnData(data);
+        alert(message);
+      }
     }
 
     //remove profissional da base de dados
   };
+
+  //when data or nData change it will reload the table
+  useEffect(() => {}, []);
 
   //when data or nData change it will reload the table
   useEffect(() => {}, [data, nData]);
@@ -34,18 +39,20 @@ const TableData = ({ data }) => {
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
+              <th scope="col">Consulta</th>
+              <th scope="col">Dia</th>
+              <th scope="col">Hora</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {data.length !== 0 ? (
-              data.user.map((el, index) => {
+            {data.length > 0 ? (
+              data.map((el, index) => {
                 return (
                   <tr key={el._id}>
-                    <td>{el.name}</td>
-                    <td>{el.email}</td>
+                    <td>{el.text}</td>
+                    <td>{el.start.replace("T00:00:00", "")}</td>
+                    <td>{el.resource}</td>
                     <td>
                       <Link
                         className="px-2 remove-color"
